@@ -1,0 +1,8 @@
+# 3rd Party Libraries #
+#######################
+node_modules/
+bower_components/
+
+# built versions #
+##################
+dist.dev/

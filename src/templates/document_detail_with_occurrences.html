@@ -1,0 +1,75 @@
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-9 col-md-offset-3 col-lg-8 col-lg-offset-2 document-content">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Document Detail Page</h3>
+        </div>
+        <div class="panel-body">
+          <div class="loading-wrapper text-center" ng-show="loading">
+            <i class="fa fa-3x fa-pulse fa-spinner text-muted"></i>
+          </div>
+          <div ng-hide="loading">
+            <div class="location" ng-repeat="location in locations" ng-click="setActive(location.id)" ng-class="{active: location.id === active}" ng-controller="AddOccurrenceCtrl">
+              <div class="occurrences popover">
+                <div class="arrow"></div>
+                <h3 class="popover-title">Occurrences</h3>
+                <div class="popover-content" >
+                  <span class="text-muted" ng-show="location.occurrences.length === 0">
+                    No relevant topics at this location
+                  </span>
+                  <ul>
+                    <li ng-repeat="occurrence in location.occurrences" ng-controller="SingleOccurrenceOnDocumentCtrl">
+                      <a href="#/location/{{ occurrence.ring_prev }}" ng-show="occurrence.ring_prev">
+                        <i class="fa fa-fw fa-chevron-left"></i>
+                      </a>
+                      <i class="fa fa-fw" ng-hide="occurrence.ring_prev">&nbsp;</i> <!-- spacer so elements line up if no ring_prev -->
+                      <button ng-click="removeOccurrence()" class="btn btn-xs btn-danger">
+                        <i class="fa fa-times"></i> 
+                      </button>
+                      <a href="#/basket/{{ occurrence.basket.id }}">
+                         {{ occurrence.basket.display_name }}
+                      </a>
+                      <a href="#/location/{{ occurrence.ring_next }}" ng-show="occurrence.ring_next">
+                        <i class="fa fa-fw fa-chevron-right"></i>
+                      </a>
+                    </li>
+                  </ul>
+                  <button ng-click="triggerAddOccurrenceForm()" class="btn btn-xs btn-info" ng-hide="addOccurrenceForm.show"><i class="fa fa-plus"></i> Topic</button>
+                  <div class="text-danger" ng-show="error.withHit"><strong>{{ error.withHit }}</strong></div>
+                  <form ng-show="addOccurrenceForm.show" ng-submit="addOccurrence()">
+                    <div class="form-group">
+                      <label for="ex1_value">Select a Topic</label>
+                      <div angucomplete-alt id="ex1" placeholder="Choose a Topic" pause="100" selected-object="basket" remote-url="{{hitListUrl}}" remote-url-data-field="hits" title-field="name" input-class="form-control"></div>
+                    </div>
+                    <input class="btn btn-primary" type="submit" />
+                    <cancel-button state-variable="addOccurrenceForm"></cancel-button>
+                  </form>
+                  <div ng-show="highlightedText">
+                    <hr />
+                    Would you like to add the topic <strong>{{ highlightedText }}</strong>?
+                    <br />
+                    <button class="btn btn-primary btn-xs" ng-click="addTopicAndOccurrence()">Create</button>
+                    <button class="btn btn-warning btn-xs" ng-click="highlightedText=''">Cancel</button>
+                  </div>
+                </div>
+              </div>
+
+              <div ng-mouseup="getSelectedText()">
+                <div ng-if="location.content.content_descriptor === 'Title'">
+                <div class="document-title">
+                  <h2>{{ locations[0].document.title }} </h2>
+                  <h4 ng-show="locations[0].document.author" class="text-muted title-header">by {{ locations[0].document.author }} <a href="{{ locations[0].filepath }}" target="_blank"><i class="fa fa-external-link"></i></a></h4>
+                </div>
+              </div>
+              
+              <p ng-if="location.content.content_descriptor !== 'Title'" class="content" id="location-{{ location.id }}" >{{ location.content.text }}</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

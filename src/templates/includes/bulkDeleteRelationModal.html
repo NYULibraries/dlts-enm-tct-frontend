@@ -1,0 +1,26 @@
+<div class="modal fade">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" >{{ title }}</h4>
+      </div>
+      <div class="modal-body">
+        <p>Do you want to delete the following relations:</p>
+
+        <ul>
+          <li ng-repeat="relation in body">
+            <strong ng-hide="relation.type_name === 'Generic'">{{ relation.type_name }} </strong>
+            {{ relation.basket.display_name }}
+          </li>
+        </ul>
+        
+        <p>This cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="close(false)" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" ng-click="close(true)"  data-dismiss="modal">{{ actionName }}</button>
+      </div>
+    </div>
+  </div>
+</div>

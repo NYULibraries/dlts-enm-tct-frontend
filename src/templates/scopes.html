@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Scopes</h3>
+      </div>
+      <div class="panel-body">
+        <ul class="document-list">
+          <li ng-repeat="scope in scopes" ng-controller="SingleScopeCtrl">
+
+            <div ng-hide="editScopeForm.show">
+              <a href="#/hit/list/by-scope/{{ scope.scope }}">{{ scope.scope }}</a>
+              <span class="text-muted">(used {{ scope.count }} times)</span>
+              <a href="" ng-click="triggerEditScope()">
+                <i class="fa fa-pencil"></i>
+              </a>
+              <button ng-if="scope.count == 0" ng-click="removeScope()" class="btn btn-xs btn-danger">
+                <i class="fa fa-times"></i>
+              </button>
+            </div>
+
+            <form ng-submit="editScope()" ng-show="editScopeForm.show" class="form-panel">
+              <div class="form-group">
+                <label for="edit-scope-{{ scope.id }}">Scope Name</label>
+                <input id="edit-scope-{{ scope.id }}" class="form-control" ng-model="tempScope.scope" type="text" />
+                <span ng-show="errors.scope" class="text-danger">{{ errors.ttype }}</span>
+              </div>
+
+              <input type="submit" class="btn btn-primary" value="Submit Edits" />
+              <cancel-button state-variable="editScopeForm"></cancel-button>
+
+            </form>
+          </li>
+        </ul>
+      </div>
+
+      <div class="panel-footer" ng-controller="NewScopeCtrl">
+        <button class="btn btn-info btn-footer" ng-click="triggerAddScopeForm()" ng-hide="showNewScopeForm.show">
+          <i class="fa fa-plus"></i>
+          <span class="full-text"> Add Scope</span>
+        </button>
+
+        <form ng-show="showNewScopeForm.show" ng-submit="addNewScope()">
+          <div class="form-group">
+            <label for="new-ttype">New Scope Name</label>
+            <input class="form-control" ng-model="newScope.scope" type="text" id="new-scope" />
+            <span ng-show="errors.scope" class="text-danger">{{ errors.scope }}</span>
+          </div>
+
+          <input type="submit" class="btn btn-primary" value="Add Scopes" />
+          <cancel-button state-variable="showNewScopeForm"></cancel-button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

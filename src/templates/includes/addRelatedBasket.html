@@ -1,0 +1,66 @@
+    <div name="new-relation" ng-controller="RelationFormCtrl">
+      <div class="form-group">
+        <label for="ex1_value">Related To</label>
+        <div angucomplete-alt minsize="1" id="ex1" placeholder="Choose a Topic" pause="100" selected-object="newRelation.temp_basket" remote-url="{{hitListUrl}}" remote-url-data-field="hits" title-field="name" input-class="form-control" initial-value="currentBasket"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="select-relation-type">Relation Type</label>
+        <select ng-model="newRelation.relationtype" class="form-control" ng-options="type as type.rtype for type in rtypes track by type.id">
+
+        </select>
+      </div>
+
+      <div ng-hide="newRelation.relationtype.id === 0" class="inline-select form-group">
+        <div>This topic&nbsp;</div>
+        <div ng-hide="newRelation.relationtype.symmetrical">
+          <select class="form-control" ng-model="newRelation.direction">
+            <option value="source">{{ newRelation.relationtype.role_to }}</option>
+            <option value="destination">{{ newRelation.relationtype.role_from }}</option>
+          </select>
+        </div>
+        <div ng-show="newRelation.relationtype.symmetrical">
+          <em>{{ newRelation.relationtype.role_from }}</em>
+        </div>
+        <div>
+          <span ng-show="newRelation.temp_basket"><strong>&nbsp;{{ newRelation.temp_basket.originalObject.name }}</strong></span>
+          <span ng-hide="newRelation.temp_basket"> <strong>&nbsp;please select a target topic</strong></span>
+        </div>
+      </div>
+
+      <hr>
+      <div class="form-group">
+        <span class="help-block" ng-hide="showNewRtypeForm.show">Don't see the Relation Type you're looking for?  <button class="btn btn-sm btn-light" ng-click="addNewRtype($event)"><i class="fa fa-plus"></i> Add Relation Type</button></span>
+        <!-- form for adding new RelationType -->
+        <div class="form-panel" ng-show="showNewRtypeForm.show">
+
+          <!-- role if symmetrical -->
+          <div class="form-group">
+            <label for="role_to">Describe <strong>{{ basket.basket.display_name}}'s</strong> relation to the target topic</label>
+            <input id="role_to" class="form-control" ng-model="newRtype.role_to" type="text">
+          </div>
+
+          <!-- roles if not symmetrical-->
+          <div class="form-group" ng-hide="newRtype.symmetrical">
+            <label for="role_from">Describe the target topic's relation to <strong>{{ basket.basket.display_name }}</strong></label>
+            <input id="role_from" class="form-control" ng-model="newRtype.role_from" type="text">
+          </div>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="newRtype.symmetrical">
+              Symmetrical
+            </label>
+          </div>
+
+          <button ng-click="submitRtype($event)" class="btn btn-info">Add Relation Type</button>
+          <cancel-button state-variable="showNewRtypeForm"></cancel-button>
+        </div>
+      </div> <!-- end new RelationType form -->
+
+      <button class="btn btn-info" ng-click="submitRelationForm($event)">
+        Relate
+      </button>
+
+      <cancel-button state-variable="showRelationForm"></cancel-button>
+    </div>

@@ -1,0 +1,9 @@
+    <form ng-submit="addNewHit()" id="addHitForm">
+      <p ng-show="error.msg" class="text-danger"><strong>{{ error.msg }}</strong></p>
+
+      <label for="#newHitForm">New Topic Name:</label>
+      <input type="text" class="form-control" placeholder="Add New Name" id="newHitForm" ng-model="newHit.name">
+
+      <input class="btn btn-primary" type="submit" value="Submit" />
+      <cancel-button state-variable="showAddHitForm"></cancel-button>
+    </form>

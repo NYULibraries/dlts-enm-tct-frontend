@@ -1,0 +1,81 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Relation Types</h3>
+      </div>
+      <div class="panel-body">
+        <ul class="document-list">
+          <li ng-repeat="rtype in relationtypes" ng-controller="SingleRelationTypeCtrl">
+            <div ng-hide="showEditTypeForm.show">
+              <button ng-hide="rtype.rtype === 'Generic'" ng-click="removeRtype()" class="btn btn-xs btn-danger">
+                <i class="fa fa-times"></i>
+              </button>
+              {{ rtype.rtype }}
+              <span class="text-muted">(used {{ rtype.count }} times)</span>
+              <a href="" ng-click="triggerEditRtype()" ng-hide="rtype.rtype === 'Generic'"><i class="fa fa-pencil"></i></a>
+            </div>
+
+            <form class="form-panel" ng-show="showEditTypeForm.show" ng-submit="editRtype()">
+
+              <!-- role if symmetrical -->
+              <div class="form-group">
+                <label for="role_to_{{ rtype.id }}">Describe relation of Topic A to Topic B</label>
+                <input id="role_to_{{ rtype.id }}" class="form-control" ng-model="newRtype.role_to" type="text">
+              </div>
+
+              <!-- roles if not symmetrical-->
+              <div class="form-group" ng-hide="newRtype.symmetrical">
+                <label for="role_from_{{ rtype.id }}">Describe relation of Topic B to Topic A</label>
+                <input id="role_from_{{ rtype.id }}" class="form-control" ng-model="newRtype.role_from" type="text">
+              </div>
+
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" ng-model="newRtype.symmetrical">
+                  Symmetrical
+                </label>
+              </div>
+
+              <input class="btn btn-info" type="submit" value="Edit Relation Type" />
+              <cancel-button state-variable="showEditTypeForm"></cancel-button>
+            </form>
+          </li>
+        </ul>
+      </div>
+
+      <div class="panel-footer" ng-controller="NewRtypeCtrl">
+        <button class="btn btn-info btn-footer" ng-click="triggerAddTypeForm()" ng-hide="showNewTypeForm.show">
+          <i class="fa fa-plus"></i>
+          <span class="full-text"> Add Relation Type</span>
+        </button>
+
+        <form ng-show="showNewTypeForm.show" ng-submit="addNewType()">
+
+          <!-- role if symmetrical -->
+          <div class="form-group">
+            <label for="role_to">Describe relation of Topic A to Topic B</label>
+            <input id="role_to" class="form-control" ng-model="newRtype.role_to" type="text">
+          </div>
+
+          <!-- roles if not symmetrical-->
+          <div class="form-group" ng-hide="newRtype.symmetrical">
+            <label for="role_from">Describe relation of Topic B to Topic A</label>
+            <input id="role_from" class="form-control" ng-model="newRtype.role_from" type="text">
+          </div>
+
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="newRtype.symmetrical">
+              Symmetrical
+            </label>
+          </div>
+
+          <input class="btn btn-info" type="submit" value="Add Relation Type" />
+          <cancel-button state-variable="showNewTypeForm"></cancel-button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

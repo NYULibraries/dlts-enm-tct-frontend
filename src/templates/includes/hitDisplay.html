@@ -1,0 +1,5 @@
+<h2 class="hit-name" ng-class="{preferred: hit.preferred, 'hidden-hit':hit.hidden }">
+  <a title="Edit Topic Name: {{hit.name}}" ng-click="editHit()"> {{ displayName(hit.name, hit.scope.scope) }} <i class="fa fa-pencil"></i></a>
+  <button class="btn btn-danger" ng-show="basket.basket.topic_hits.length > 1" title="Remove Topic Name: {{ hit.name}}" ng-click="deleteHit()"><i class="fa fa-times"></i></button>
+  <button class="btn btn-danger"  ng-show="basket.basket.topic_hits.length > 1" title="Detach Topic Name: {{ hit.name }}" ng-click="detachHit(hit)"><i class="fa fa-sign-out"></i></button>
+</h2>

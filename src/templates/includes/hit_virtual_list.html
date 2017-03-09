@@ -1,0 +1,23 @@
+    <form class="canvas" ng-style="canvasHeight">
+        <div class="checkbox hit-item"
+          ng-repeat="hit in visibleProvider"
+          ng-class="{preferred: hit.preferred, 'hidden-hit':hit.hidden }"
+          ng-style="hit.styles"
+          >
+          <label for="{{hit.id}}">
+            <input type="checkbox" ng-model="bulkData.hits[hit.id]" id="{{hit.id}}" name="group">
+            <span ng-show="hit.basket"><a href="#/basket/{{hit.basket}}" ng-click="setCurrentHit(hit.id)">{{ hit.display_name }}</a></span>
+            <span ng-hide="hit.basket">{{ hit.name }}</span>
+          </label>
+
+          <!-- Review Controls -->
+          <span ng-controller="ChangeReviewCtrl">
+            <button class="btn btn-outline success no-border" ng-class="{ active: hit.review.reviewed && !hit.review.changed}" ng-click="markReviewed(hit.review, hit.basket)"><i class="fa fa-check"></i></button>
+            <button class="btn btn-outline warning no-border" ng-class="{ active: hit.review.changed }" ng-click="markChanged(hit.review, hit.basket)"><i class="fa fa-pencil"></i></button>
+            <span class="text-light" ng-if="hit.review.reviewed">
+              (Reviewed by {{ hit.review.reviewer }} on {{ hit.review.time.split('T')[0] }})
+            </span>
+            <button class="btn btn-outline danger no-border" ng-if="hit.review.reviewed" ng-click="markNotReviewed(hit.review, hit.basket)"><i class="fa fa-times"></i></button>
+          </span>
+        </div>
+    </form>

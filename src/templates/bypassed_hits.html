@@ -1,0 +1,30 @@
+<div class="row" ng-controller="HitBypassBulkCtrl">
+  <div class="col-xs-12">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <span class="panel-title">Ignored Names</span>
+        <div class="dropdown pull-right">
+          <a type="button" class="btn btn-warning dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Actions <i class="fa fa-angle-down"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="" ng-click="bulkUnbypass()">Unignore</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="panel-body">
+        <h3 class="template-title">{{ hits.length }} name<span ng-if="hits.length !== 0">s</span> found</h3>
+        <span class="text-danger"><strong>{{ bulkError }}</strong></span>
+        <form  ng-show="hits.length > 0">
+          <div class="checkbox" ng-repeat="hit in hits">
+            <label for="{{ hit.id }}">
+              <input type="checkbox" ng-model="bulkData.hits[hit.id]" id="{{hit.id}}" name="group">
+              {{ hit.name }}
+            </label>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

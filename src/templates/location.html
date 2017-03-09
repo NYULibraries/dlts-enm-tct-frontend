@@ -1,0 +1,73 @@
+  <div class="row">
+
+    <div class="col-xs-12 col-md-8">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <a href="#/location/{{location.previous_location_id}}" ng-show="location.previous_location_id" class="btn btn-success location_control_left">
+            <i class="fa fa-lg fa-chevron-left"></i>
+            <span class="full-text">Previous Page </span>
+          </a>
+          <span class="panel-page-title">
+            <strong>{{ location.document.title }}, </strong>
+            {{ location.content.content_descriptor }} 
+            <span ng-show="location.context">({{ location.context }})</span>
+          </span>
+          <a href="#/location/{{location.next_location_id}}" ng-show="location.next_location_id" class="btn btn-success location_control_right">
+            <span class="full-text">Next Page </span>
+            <i class="fa fa-lg fa-chevron-right"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          <h3 class="panel-title">Content</h3>
+        </div>
+        <div class="panel-body">
+          <div ng-bind-html="location.content.text"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-md-4">
+      <div class="panel panel-warning">
+        <div class="panel-heading">
+          <h3 class="panel-title">Topics at This Location</h3>
+        </div>
+        <div class="panel-body">
+          <ul style="list-style:none;">
+            <li ng-repeat="occurrence in location.occurrences">
+
+              <a href="#/location/{{ occurrence.ring_prev }}" ng-show="occurrence.ring_prev">
+                <i class="fa fa-fw fa-chevron-left"></i>
+              </a>
+              <i class="fa fa-fw" ng-hide="occurrence.ring_prev">&nbsp;</i> <!-- spacer so elements line up if no ring_prev -->
+              <a href="#/basket/{{ occurrence.basket.id }}">
+                {{ occurrence.basket.display_name }}
+              </a>
+
+              <a href="#/location/{{ occurrence.ring_next }}" ng-show="occurrence.ring_next">
+                <i class="fa fa-fw fa-chevron-right"></i>
+              </a>
+
+            </li>
+          </ul>
+        </div>
+      </div> 
+
+      <div class="panel panel-success" ng-controller="IndexFromLocationCtrl">
+        <div class="panel-heading">
+          <h3 class="panel-title">Indexes</h3>
+        </div>
+        <div class="panel-body">
+          <ul style="list-style: none;">
+            <li ng-repeat="index in indexes">
+            <a href="{{ index.url }}" target="_blank">Index {{ $index + 1 }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+

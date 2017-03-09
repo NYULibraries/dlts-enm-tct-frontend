@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Topic Types</h3>
+      </div>
+      <div class="panel-body">
+        <ul class="document-list">
+          <li ng-repeat="ttype in ttypes" ng-controller="SingleTtypeSoloCtrl">
+
+            <div ng-hide="editTypeForm.show">
+              <button ng-click="removeTtype()" class="btn btn-xs btn-danger">
+                <i class="fa fa-times"></i>
+              </button>
+              <a href="#/hit/list/by-type/{{ ttype.ttype }}">{{ ttype.ttype }}</a>
+              <span class="text-muted">(used {{ ttype.count }} times)</span>
+              <a href="" ng-click="triggerEditType()">
+                <i class="fa fa-pencil"></i>
+              </a>
+            </div>
+
+            <form ng-submit="editTtype()" ng-show="editTypeForm.show" class="form-panel">
+              <div class="form-group">
+                <label for="edit-ttype-{{ ttype.id }}">Topic Type</label>
+                <input id="edit-ttype-{{ ttype.id }}" class="form-control" ng-model="tempType.ttype" type="text" />
+                <span ng-show="errors.ttype" class="text-danger">{{ errors.ttype }}</span>
+              </div>
+
+              <input type="submit" class="btn btn-primary" value="Submit Edits" />
+              <cancel-button state-variable="editTypeForm"></cancel-button>
+
+            </form>
+          </li>
+        </ul>
+      </div>
+
+      <div class="panel-footer" ng-controller="NewTtypeCtrl">
+        <button class="btn btn-info btn-footer" ng-click="triggerAddTypeForm()" ng-hide="showNewTypeForm.show">
+          <i class="fa fa-plus"></i>
+          <span class="full-text"> Add Topic Type</span>
+        </button>
+
+        <form ng-show="showNewTypeForm.show" ng-submit="addNewType()">
+          <div class="form-group">
+            <label for="new-ttype">New Topic Type</label>
+            <input class="form-control" ng-model="newType.ttype" type="text" id="new-ttype" />
+            <span ng-show="errors.ttype" class="text-danger">{{ errors.ttype }}</span>
+          </div>
+
+          <input type="submit" class="btn btn-primary" value="Add Topic Type" />
+          <cancel-button state-variable="showNewTypeForm"></cancel-button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

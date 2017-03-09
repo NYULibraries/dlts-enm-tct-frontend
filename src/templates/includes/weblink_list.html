@@ -1,0 +1,32 @@
+
+    <div class="col-xs-12 weblinks panel" ng-controller="WebLinksCtrl">
+      <h4 class="template-title">Weblinks</h4>
+      <ul style="list-style:none">
+        <li ng-repeat="weblink in weblinks" ng-controller="SingleWeblinkCtrl">
+          <button ng-click="removeWeblink()" class="btn btn-xs btn-danger">
+            <i class="fa fa-times"></i>
+          </button>
+          <a target="tab1" href="{{ weblink.url }}">
+            {{ weblink.content }}
+          </a>
+        </li>
+      </ul>
+      <button class="btn btn-info" ng-click="triggerAddLink()" ng-hide="showLinkForm.show">
+        <i class="fa fa-plus"></i>Add New Weblink</button>
+
+      <form ng-submit="addLink()" ng-show="showLinkForm.show">
+        <h2>Add A New Weblink</h2>
+        <div class="form-group">
+          <label for="new_link_url">Url</label>
+          <input ng-model="newLink.url" type="url" class="form-control" id="new_link_url" placeholder="Enter Url">
+        </div>
+
+        <div class="form-group">
+          <label for="new_link_content">Short Description (link content)</label>
+          <input ng-model="newLink.content" type="text" class="form-control" id="new_link_content" placeholder="Enter Description">
+        </div>
+
+        <input type="submit" value="Submit" class="btn btn-primary" />
+        <cancel-button state-variable="showLinkForm"></cancel-button>
+      </form>
+    </div>

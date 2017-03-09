@@ -1,0 +1,144 @@
+
+  <div class="row" ng-controller="DetachFormCtrl">
+    <div class="col-xs-12">
+      <h2>Detach {{ hit_to_detach.name }} from this topic</h2>
+      <form ng-submit="sendDetach()" class="form-panel">
+
+        <table class="table table-striped table-detach" ng-show="basket.basket.occurs.length > 0">
+          <colgroup>
+            <col class="col-detach-name">
+            <col class="col-detach-radio">
+            <col class="col-detach-radio">
+            <col class="col-detach-radio">
+          </colgroup>
+          <tr>
+            <th>Occurrence</th>
+            <th>Stay</th>
+            <th>Move</th>
+            <th>Both</th>
+          </tr>
+          <tr ng-repeat="occurrence in basket.basket.occurs">
+            <td>
+              {{ occurrence.location.document.author }}<span ng-show="occurrence.location.document.author">, </span>
+              <em>{{ occurrence.location.document.title }}</em><span ng-show="occurrence.location.localid">, 
+              {{ occurrence.location.localid.replace('_',' ') }}</span>
+              <a href="#/location/{{ occurrence.location.id }}" target="_blank"><i class="fa fa-external-link"></i></a>
+            </td>
+            <td>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="occurrence_{{occurrence.id}}" id="occurrence_stay_{{occurrence.id}}" value="stay" aria-label="Stay Occurrence {{occurrence.id}}" ng-model="split_data.occurrences[occurrence.id]" />
+                </label>
+              </div>
+            </td>
+            <td>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="occurrence_{{occurrence.id}}" id="occurrence_move_{{occurrence.id}}" value="move" aria-label="Move Occurrence {{occurrence.id}}" ng-model="split_data.occurrences[occurrence.id]" />
+                </label>
+              </div>
+            </td>
+            <td>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="occurrence_{{occurrence.id}}" id="occurrence_both_{{occurrence.id}}" value="both" aria-label="Both Occurrence {{occurrence.id}}" ng-model="split_data.occurrences[occurrence.id]" />
+                </label>
+              </div>
+            </td>
+          </tr>
+        </table>
+
+        <table class="table table-striped table-detach" ng-show="basket.relations.length > 0">
+          <colgroup>
+            <col class="col-detach-name">
+            <col class="col-detach-radio">
+            <col class="col-detach-radio">
+            <col class="col-detach-radio">
+          </colgroup>
+          <tr>
+            <th>Relations</th>
+            <th>Stay</th>
+            <th>Move</th>
+            <th>Both</th>
+          </tr>
+          <tr ng-repeat="relation in basket.relations">
+            <td>
+              <strong ng-hide="relation.relationtype.rtype === 'Generic'">{{ relation.type_name }} </strong>
+              {{ relation.basket.display_name }}
+            </td>
+            <td>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="relation_{{relation.id}}" id="relation_stay_{{relation.id}}" value="stay" aria-label="Stay Relation {{relation.id}}" ng-model="split_data.relations[relation.id]" />
+                </label>
+              </div>
+            </td>
+            <td>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="relation_{{relation.id}}" id="relation_move_{{relation.id}}" value="move" aria-label="Move relation {{relation.id}}" ng-model="split_data.relations[relation.id]" />
+                </label>
+              </div>
+            </td>
+            <td>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="relation_{{relation.id}}" id="relation_both_{{relation.id}}" value="both" aria-label="Both Relation {{relation.id}}" ng-model="split_data.relations[relation.id]" />
+                </label>
+              </div>
+            </td>
+          </tr>
+        </table>
+
+        <table class="table table-striped table-detach" ng-show="ttypes.length > 0">
+          <colgroup>
+            <col class="col-detach-name">
+            <col class="col-detach-radio">
+            <col class="col-detach-radio">
+            <col class="col-detach-radio">
+          </colgroup>
+          <tr>
+            <th>Topic Types</th>
+            <th>Stay</th>
+            <th>Move</th>
+            <th>Both</th>
+          </tr>
+          <tr ng-repeat="ttype in ttypes">
+            <td>
+              {{ ttype.ttype }}
+            </td>
+            <td>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="ttype_{{ttype.id}}" id="ttype_stay_{{ttype.id}}" value="stay" aria-label="Stay ttype {{ttype.id}}" ng-model="split_data.types[ttype.id]" />
+                </label>
+              </div>
+            </td>
+            <td>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="ttype_{{ttype.id}}" id="ttype_move_{{ttype.id}}" value="move" aria-label="Move ttype {{ttype.id}}" ng-model="split_data.types[ttype.id]" />
+                </label>
+              </div>
+            </td>
+            <td>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="ttype_{{ttype.id}}" id="ttype_both_{{ttype.id}}" value="both" aria-label="Both ttype {{ttype.id}}" ng-model="split_data.types[ttype.id]" />
+                </label>
+              </div>
+            </td>
+          </tr>
+        </table>
+
+        <button type="submit" class="btn btn-info" ng-disabled="processing.active" >
+          <span ng-hide="processing.active">Detach</span>
+          <span ng-show="processing.active"><i class="fa fa-spinner fa-pulse"></i> Detaching...</span>
+        </button>
+        <button class="btn btn-warning" ng-click="showDetail($event)">Cancel</button>
+
+      </form>
+
+    </div>
+  </div>
+

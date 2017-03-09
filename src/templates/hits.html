@@ -1,0 +1,36 @@
+<div class="row" ng-controller="HitListCtrl">
+  <div class="col-xs-12" ng-controller="HitBulkActionCtrl">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <span class="panel-title">Topic Name List</span>
+        <div class="dropdown pull-right">
+          <a type="button" class="btn btn-warning dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Actions <i class="fa fa-angle-down"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="" ng-click="bulkMerge()">Merge</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="loading-wrapper text-center" ng-show="loading">
+          <i class="fa fa-3x fa-pulse fa-spinner text-muted"></i>
+        </div>
+        <div ng-hide="loading">
+          <h3 class="template-title">{{ hits.length }} name<span ng-if="hits.length !== 1">s</span> found</h3>
+          <span class="text-danger"><strong>{{ bulkError }}</strong></span>
+          
+          <div ng-if="hits">
+            <ui-virtual-list 
+              ui-data-provider="hits" 
+              bulk-data="bulkData" 
+              offset="210"
+              template-url="templates/includes/hit_virtual_list.html">
+            </ui-virtual-list>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

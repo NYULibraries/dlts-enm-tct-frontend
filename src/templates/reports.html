@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Reports</h3>
+      </div>
+      <div class="panel-body">
+        <ul class="document-list">
+          <li ng-repeat="report in reports" ng-controller="SingleReportCtrl">
+
+            <button ng-click="destroy()" class="btn btn-xs btn-danger">
+              <i class="fa fa-times"></i>
+            </button>
+            <a href="{{ report.location }}">{{ report.topic_set }}: <strong>{{ report.time }}</strong></a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="panel-footer" ng-controller="NewReportCtrl">
+        <button class="btn btn-info btn-footer" ng-click="triggerGenerateReportForm()" ng-hide="showNewReportForm.show">
+          <i class="fa fa-plus"></i>
+          <span class="full-text"> Generate New Report</span>
+        </button>
+
+        <form ng-show="showNewReportForm.show" ng-submit="generateReport()">
+          <h4 class="text-danger" ng-show="error">{{ error }}</h4>
+
+          <div class="form-group">
+            <label class="sr-only">Choose Report Type</label>
+            <select ng-options="report_type[0] as report_type[1] for report_type in reportTypes" ng-model="newReportType" class="form-control">
+              <option value="">Choose Report Type</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary" ng-disabled="generating">
+            <span ng-hide="generating">Generate Report</span>
+            <span ng-show="generating"><i class="fa fa-spinner fa-pulse"></i> Generating...</span>
+          </button>
+          <cancel-button state-variable="showNewReportForm"></cancel-button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

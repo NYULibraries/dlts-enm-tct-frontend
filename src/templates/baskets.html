@@ -1,0 +1,44 @@
+<div class="row" ng-controller="BasketListCtrl">
+  <div class="col-xs-12">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <span class="panel-title">Topic List</span>
+
+        <div class="dropdown pull-right">
+          <a type="button" class="btn btn-warning dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <strong>{{ ordering.type }}</strong> <i class="fa fa-angle-down"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li ng-repeat="option in order_options"><a href="" ng-click="basketOrder(option)">{{ option.type }}</a></li>
+          </ul>
+        </div>
+
+        <div class="dropdown pull-right">
+          <a type="button" class="btn btn-warning dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <strong>{{ filtering }}</strong> <i class="fa fa-angle-down"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li ng-repeat="option in filter_options"><a href="" ng-click="basketFilter(option)">{{ option }}</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="loading-wrapper text-center" ng-show="loading">
+          <i class="fa fa-3x fa-pulse fa-spinner text-muted"></i>
+        </div>
+        <div ng-hide="loading">
+          <h3 class="template-title">{{ baskets.length }} topic<span ng-if="baskets.length !== 1">s</span> found</h3>
+          <span class="text-danger"><strong>{{ bulkError }}</strong></span>
+          
+          <div ng-if="baskets">
+            <ui-virtual-list 
+              ui-data-provider="baskets" 
+              offset="210"
+              template-url="templates/includes/basket_virtual_list.html">
+            </ui-virtual-list>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

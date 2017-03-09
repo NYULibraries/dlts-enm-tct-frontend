@@ -1,0 +1,17 @@
+
+  <h3> {{ clarification.title }} </h3>
+  <h4 class="quiet-header"> {{ clarification.message }} </h4>
+
+  <form ng-submit="clarification.radio_submit()">
+    <div class="radio" ng-repeat="item in clarification.list">
+      <label>
+        <input type="radio" ng-model="clarification.value" ng-value="{{item.basket.id}}" />
+        {{ item.name }} ({{ item.basket.id === basket.basket.id ? "Current Topic" : "Topic: " + item.basket.display_name }})
+      </label>
+    </div>
+    <input class="btn btn-info" type="submit" value="Merge" />
+    <button ng-click="clarification.secondary_action($event)" class="btn btn-primary" ng-if="clarification.secondary_action">
+      {{ clarification.secondary_action_text }}
+    </button>
+    <cancel-button state-variable="showAddHitForm"></cancel-button>
+  </form>

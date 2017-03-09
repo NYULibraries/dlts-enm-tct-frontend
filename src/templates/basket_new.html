@@ -1,0 +1,19 @@
+
+  <div class="row">
+    <div class="col-xs-12">
+      <h4 class="template-title">Add New Topic</h4>
+    </div>
+    <div class="col-xs-12">
+      <h5 class="text-danger" ng-show="error">{{ error }}</h5>
+      <form ng-submit="addTopic()">
+        <div class="form-group">
+          <label for="new-hit-name">Name</label>
+          <input id="new-hit-name" class="form-control" type="text" ng-model="newHit.name" placeholder="Enter Topic Name" />
+        </div>
+
+        <input class="btn btn-primary" type="submit" value="Submit">
+        
+      </form>
+    </div>
+  </div>
+

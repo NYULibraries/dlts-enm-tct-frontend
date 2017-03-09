@@ -1,0 +1,229 @@
+<div class="row">
+  <!-- Left Column -->
+  <div class="col-xs-12 col-md-8 topic_name">
+
+    <div class="panel panel-primary">
+      <div class="panel-heading" ng-controller="MergeBasketCtrl">
+        <span class="panel-page-title" ><strong>Topic Detail Page</strong></span>
+        <button class="btn btn-warning btn-title" ng-disabled="running" ng-click="runAutomaticRelations()" ng-controller="AutomaticRelationCtrl" ng-hide="showMergeForm.show">
+          <i class="fa" ng-class="{'fa-refresh': !running, 'fa-spinner fa-pulse': running}"></i><span class="full-text"> Rerun Automatic Relations</span>
+        </button>
+        <button class="btn btn-warning btn-title" ng-click="showMergeTemplate()" ng-hide="showMergeForm.show">
+          <i class="fa fa-files-o"></i><span class="full-text"> Merge Topic</span>
+        </button>
+        <button class="btn btn-danger btn-title" ng-click="deleteBasket()" ng-controller="DeleteBasketCtrl" ng-hide="showMergeForm.show">
+          <i class="fa fa-trash"></i><span class="full-text"> Delete Topic</span>
+        </button>
+        
+        <div ng-show="showMergeForm.show" class="form-panel">
+          <h4 class="text-danger">{{ error }}</h4>
+          <form ng-submit="mergeTopics()">
+            <label for="merge_autocomplete">Choose Topic to Merge</label>
+            <div angucomplete-alt id="merge_autcomplete" minsize="1" placeholder="choose a topic" pause="100" selected-object="hitToMerge" remote-url="{{hitListUrl}}" remote-url-data-field="hits" title-field="name" input-class="form-control"></div>
+            <button class="btn btn-primary" type="submit" ng-disabled="merging">
+              <span ng-hide="merging">Merge</span>
+              <span ng-show="merging"><i class="fa fa-spinner fa-pulse"></i> Merging...</span>
+            </button>
+            <cancel-button state-variable="showMergeForm"></cancel-button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Topic Names</h3>
+      </div>
+      <div class="panel-body">
+        <div class="col-xs-12" ng-repeat="hit in basket.basket.topic_hits track by hit.id" ng-controller="HitDetailCtrl">
+          <div ng-include="hitTemplate"></div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="panel-footer">
+        <div ng-controller="AddHitCtrl">
+          <button class="btn btn-info btn-footer" ng-click="triggerAddHitForm()" ng-hide="showAddHitForm.show">
+            <i class="fa fa-plus"></i><span class="full-text"> Add Name</span>
+          </button>
+
+          <div ng-show="showAddHitForm.show" class="form-panel">
+            <div ng-include="addHitForm"></div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Types -->
+    <div class="topic-types panel panel-info" ng-controller="BasketTypesCtrl">
+      <div class="panel-heading">
+        <h3 class="panel-title">Topic Types</h3>
+      </div>
+      <div class="panel-body">
+        <p class="text-muted" ng-hide="ttypes.length > 0">No Topic Types on this Topic</p>
+        <ul style="list-style:none">
+          <li ng-repeat="type in ttypes" ng-controller="SingleTtypeCtrl">
+            <button ng-click="removeTtype()" class="btn btn-xs btn-danger">
+              <i class="fa fa-times"></i>
+            </button>
+            <a href="#/hit/list/by-type/{{ type.ttype }}">{{ type.ttype }}</a>
+          </li>
+        </ul>
+      </div>
+      <div class="panel-footer" ng-controller="AddOrSelectCtrl">
+        <button class="btn btn-info btn-footer" ng-click="triggerAddType()" ng-hide="showTypesForm.show">
+          <i class="fa fa-plus"></i><span class="full-text"> Add Topic Type</span>
+        </button>
+
+        <form ng-submit="addType()" ng-show="showTypesForm.show">
+          <ui-select ng-model="formData.newType">
+            <ui-select-match placeholder="Select topic type or add new one...">
+              <span>{{ $select.selected.ttype || $select.search }}</span>
+              <a class="btn btn-xs btn-link pull-right" ng-click="clear($event, $select)">
+                <i class="fa fa-times"></i>
+              </a>
+            </ui-select-match>
+            <ui-select-choices repeat="ttype in (allTypes | filter: { ttype: $select.search }) track by ttype.id" refresh="refreshResults($select)" refresh-delay="0">
+              <span>{{ttype.ttype}}</span>
+            </ui-select-choices>
+          </ui-select>
+
+          <input type="submit" class="btn btn-primary" name="submit" value="Submit"/>
+          <cancel-button state-variable="showTypesForm"></cancel-button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Review Tools -->
+    <div class="panel panel-info topic-review" ng-class="{'panel-danger': !review.reviewed, 'panel-info': review.reviewed && !review.changed, 'panel-warning': review.reviewed && review.changed}" ng-controller="DetailReviewCtrl">
+      <div class="panel-heading" ng-controller="ChangeReviewCtrl">
+        <span class="panel-title">
+          <span ng-if="review.reviewed">Topic Marked as <span ng-if="!review.changed">Reviewed</span><span ng-if="review.changed">Edited</span> by {{ review.reviewer }} on {{ review.time.split('T')[0] }}</span>
+          <span ng-if="!review.reviewed">Topic Not Marked as Reviewed</span>
+        </span>
+        <button ng-if="!review.reviewed" class="btn btn-warning btn-title" ng-click="markChanged(review, basket.basket.id)">
+            <i class="fa fa-pencil"></i><span class="full-text"> Mark as Changed</span>
+        </button>
+        <button ng-if="!review.reviewed" class="btn btn-info btn-title" ng-click="markReviewed(review, basket.basket.id)">
+            <i class="fa fa-check"></i><span class="full-text"> Mark as Reviewed</span>
+        </button>
+        <button ng-if="review.reviewed" class="btn btn-danger btn-title" ng-click="markNotReviewed(review, basket.basket.id)">
+            <i class="fa fa-times"></i><span class="full-text"> Mark as Not Reviewed</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="basket-nav" ng-controller="BasketNavCtrl">
+      <a href="#/basket/{{ previousHit.basket }}" ng-show="previousHit" class="btn btn-primary location_control_left" ng-click="setPreviousHit(previousHit)">
+        <i class="fa fa-lg fa-chevron-left"></i>
+        <span class="full-text">Previous Topic </span>
+      </a>
+
+      <a href="#/basket/{{ nextHit.basket }}" ng-show="nextHit" class="btn btn-primary location_control_right" ng-click="setNextHit(nextHit)">
+        <span class="full-text">Next Topic </span>
+        <i class="fa fa-lg fa-chevron-right"></i>
+      </a>
+    </div>
+
+  </div><!-- End left column -->
+
+  <div class="col-xs-12 col-md-4">
+
+    <!-- Relations -->
+    <div class="relation panel panel-success" ng-controller="AllRelationsCtrl">
+      <div class="panel-heading">
+        <h3 class="panel-title">Relations</h3>
+      </div>
+      <div class="panel-body">
+        <p class="text-muted" ng-hide="basket.relations.length > 0">No Relations on this Topic</p>
+        <form class="relation-form" style="list-style:none">
+          <div class="checkbox" ng-repeat="relation in basket.relations" ng-controller="SingleRelationCtrl">
+            <label for="relation-{{ relation.id }}">
+              <input type="checkbox" ng-model="bulkRelations[relation.id]" id="relation-{{ relation.id }}" name="relation-group" />
+              <a href="/#/basket/{{relation.basket.id}}/" title="{{ relation.type_name }}">
+                <strong ng-hide="relation.type_name === 'Generic'">{{ relation.type_name }} </strong>
+                {{ relation.basket.display_name }}
+              </a>
+              <a href="" ng-click="triggerEditRelationForm()">
+                <i class="fa fa-pencil"></i>
+              </a>
+              <div class="form-panel" ng-show="showRelationForm.show">
+                <div ng-include="relationForm" ></div>
+              </div>
+            </label>
+          </div>
+        </form>
+      </div>
+
+      <div class="panel-footer" ng-controller="NewRelatedBasketCtrl">
+        <button class="btn btn-info btn-footer" ng-click="triggerRelationForm()" ng-hide="showRelationForm.show">
+          <i class="fa fa-plus"></i><span class="full-text"> Add Relation</span>
+        </button>
+        <button class="btn btn-danger btn-footer" ng-click="bulkRelationDelete()" ng-hide="showRelationForm.show">
+          <i class="fa fa-trash"></i><span class="full-text"> Remove Selected Relations</span>
+        </button>
+        <button class="btn btn-warning btn-footer" ng-click="bulkToggle()" ng-hide="showRelationForm.show">
+          <span ng-if="selectAll">
+            <i class="fa fa-check-square-o"></i><span class="full-text"> Select All</span>
+          </span>
+          <span ng-if="!selectAll">
+            <i class="fa fa-square-o"></i><span class="full-text"> Deselect All</span>
+          </span>
+        </button>
+        <div  id="new-relation" ng-show="showRelationForm.show">
+          <div ng-include="relationForm"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Occurrences -->
+    <div class="occurrence panel panel-warning">
+      <div class="panel-heading">
+        <h3 class="panel-title">Occurrences</h3>
+      </div>
+      <div class="panel-body">
+        <p class="text-muted" ng-hide="basket.basket.occurs.length > 0">No Occurrences of this Topic</p>
+        <ul style="list-style:none">
+          <li ng-repeat="occurrence in basket.basket.occurs" ng-controller="SingleOccurrenceCtrl">
+            <button ng-click="removeOccurrence()" class="btn btn-xs btn-danger" ng-hide="showMoveForm.show">
+              <i class="fa fa-times"></i>
+            </button>
+            <button ng-click="moveOccurrence()" class="btn btn-xs btn-danger">
+              <i class="fa fa-sign-out"></i>
+            </button>
+            <a href="#/location/{{occurrence.location.id}}">
+              {{ occurrence.location.document.author }}<span ng-show="occurrence.location.document.author">,</span>
+              <em>{{ occurrence.location.document.title }}</em><span ng-show="occurrence.location.localid">, </span>
+                {{ occurrence.location.localid.replace('_',' ') }}
+            </a>
+
+          </li>
+        </ul>
+      </div>
+      <div class="panel-footer" ng-controller="AddOccurrenceToBasketCtrl">
+        <button class="btn btn-info btn-footer" ng-click="triggerOccurrenceForm()" ng-hide="showOccurrenceForm.show">
+          <i class="fa fa-plus"></i><span class="full-text"> Add Occurrence</span>
+        </button>
+
+        <form ng-show="showOccurrenceForm.show" ng-submit="addOccurrence()">
+          <label for="allDocsSelect">Choose a Document</label>
+          <div class="form-group">
+            <select class="form-control" ng-options="s.id as s.title for s in sources" ng-model="source" id="AllDocsSelect" ng-change="getLocations()">
+            </select>
+          </div>
+
+          <div class="form-group" ng-show="source">
+            <label for="allLocationsSelect">Choose a Location</label>
+            <select class="form-control" ng-options="l.id as locationDisplay(l) for l in selectedDocument.locations" ng-model="newOccurrence.location" id="allLocationsSelect">
+            </select>
+          </div>
+          <input type="submit" class="btn btn-primary" name="submit" value="Add" />
+          <cancel-button state-variable="showOccurrenceForm"></cancel-button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>

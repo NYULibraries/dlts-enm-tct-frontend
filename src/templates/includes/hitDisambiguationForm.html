@@ -1,0 +1,22 @@
+  <h3>Please Disambiguate</h3>
+  <h4>Select a Scope for each Name.</h4>
+
+  <form ng-submit="scopeSubmit()">
+
+    <div class="form-group" ng-repeat="hit in disambiguationHits" ng-controller="AddOrSelectCtrl">
+      <h4>{{ hit.name }} ({{ hit.basket.display_name }}):</h4>
+      <ui-select ng-model="hit.scope">
+        <ui-select-match placeholder="Select scope or add new one...">
+          <span>{{ $select.selected.scope || $select.search }}</span>
+          <a class="btn btn-xs btn-link pull-right" ng-click="clear($event, $select)"><i class="fa fa-times"></i></a>
+        </ui-select-match>
+        <ui-select-choices repeat="scope in (scopes | filter: { scope: $select.search }) track by scope.id" refresh="refreshResults($select)" refresh-delay="0">
+          <span>{{scope.scope}}</span>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+
+    <input class="btn btn-primary" type="submit" name="submit" value="Submit" />
+    <cancel-button state-variable="showAddHitForm"></cancel-button>
+
+  </form>
