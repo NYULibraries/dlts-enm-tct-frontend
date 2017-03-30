@@ -1,7 +1,7 @@
 angular.module('editorial')
-.factory('Report', ['BaseUrl', '$resource', function (BaseUrl, $resource) {
+.factory('Report', ['Settings', '$resource', function (Settings, $resource) {
   var services = {},
-      _api = $resource(BaseUrl + 'api/review/reports/:reportID/', {}, {
+      _api = $resource(Settings.baseUrl + 'api/review/reports/:reportID/', {}, {
         all: { method: 'GET', params: { reportID: 'all' }, isArray: true},
         allTypes: { method: 'GET', params: { reportID: 'types' }, isArray: true},
         destroy: { method: 'DELETE'},

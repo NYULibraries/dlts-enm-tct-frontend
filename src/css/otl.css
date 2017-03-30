@@ -697,3 +697,19 @@ ui-virtual-list {
   height: 25px;
 }
 
+/* Forbidden Relations */
+.forbidden-list hr {
+  margin-bottom: 0;
+}
+
+.forbidden-list h4 {
+  color: #777777;
+  font-size: 16px;
+  margin-top: 0;
+}
+
+/* Forbidden Relations */
+
+.weblinks { 
+  list-style: none;
+}

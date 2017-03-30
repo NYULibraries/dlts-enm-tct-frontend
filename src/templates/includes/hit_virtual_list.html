@@ -6,7 +6,7 @@
           >
           <label for="{{hit.id}}">
             <input type="checkbox" ng-model="bulkData.hits[hit.id]" id="{{hit.id}}" name="group">
-            <span ng-show="hit.basket"><a href="#/basket/{{hit.basket}}" ng-click="setCurrentHit(hit.id)">{{ hit.display_name }}</a></span>
+            <span ng-show="hit.basket"><a href="/basket/{{hit.basket}}" ng-click="setCurrentHit(hit.id)">{{ hit.display_name }}</a></span>
             <span ng-hide="hit.basket">{{ hit.name }}</span>
           </label>
 

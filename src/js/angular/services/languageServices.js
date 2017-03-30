@@ -1,12 +1,12 @@
 angular.module('editorial')
-.factory('Language', ['BaseUrl', '$resource', function (BaseUrl, $resource) {
+.factory('Language', ['Settings', '$resource', function (Settings, $resource) {
   var services = {};
 
-  var _language = $resource(BaseUrl + 'api/language/:languageAction/', {}, {
+  var _language = $resource(Settings.baseUrl + 'api/language/:languageAction/', {}, {
     list: {method: 'GET', isArray: true, params: {languageAction: 'list'}},
   });
 
-  var _onHit = $resource(BaseUrl + 'api/language/hit/:hitID/', {}, {
+  var _onHit = $resource(Settings.baseUrl + 'api/language/hit/:hitID/', {}, {
     get: {method: 'GET', isArray: true},
     update: {method: 'PUT'}
   });

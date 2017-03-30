@@ -1,7 +1,7 @@
 angular.module('editorial')
-.factory('Extraction', ['$resource', 'BaseUrl', function ($resource, BaseUrl) {
+.factory('Extraction', ['$resource', 'Settings', function ($resource, Settings) {
   var services = {},
-      _extraction = $resource(BaseUrl + 'api/extract/:extractID/', {}, {
+      _extraction = $resource(Settings.baseUrl + 'api/extract/:extractID/', {}, {
         single: {method: 'POST', params: {extractID: 'single'}},
         reprocess: {method: 'POST', params: {extractID: 'reprocess-all'}}
       });

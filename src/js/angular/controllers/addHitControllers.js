@@ -1,8 +1,8 @@
 angular.module('editorial')
-  .controller('AddHitCtrl', ['$scope', 'Basket', 'Hit', 'Scope', 'BaseUrl',
-      function($scope, Basket, Hit, Scope, BaseUrl){
+  .controller('AddHitCtrl', ['$scope', 'Basket', 'Hit', 'Scope', 'Settings',
+      function($scope, Basket, Hit, Scope, Settings){
 
-    $scope.hitListUrl =  BaseUrl + 'api/hit/hits/search/?name=';
+    $scope.hitListUrl =  Settings.baseUrl + 'api/hit/hits/search/?name=';
     $scope.clarification = {};
     $scope.newHit = { name: "" };
     $scope.showAddHitForm = { show: false };

@@ -1,16 +1,16 @@
 angular.module('editorial')
-.factory('Review', ['$resource', 'BaseUrl', function ($resource, BaseUrl) {
+.factory('Review', ['$resource', 'Settings', function ($resource, Settings) {
   var services = {},
-      _api = $resource(BaseUrl + 'api/review/:basketID/', {}, {
+      _api = $resource(Settings.baseUrl + 'api/review/:basketID/', {}, {
         set: {method: 'PUT'},
         get: {method: 'GET'}
       }),
-      _hit_api = $resource(BaseUrl + 'api/review/hits/:hitAction/', {}, {
+      _hit_api = $resource(Settings.baseUrl + 'api/review/hits/:hitAction/', {}, {
         search: {method:'GET', params: {hitAction: 'search'}, isArray: true},
         byType: {method:'GET', params: {hitAction: 'search'}, isArray: true},
         getAll: {method:'GET', params: {hitAction: 'all'}, isArray: true},
       }),
-      _basket_api = $resource(BaseUrl + 'api/review/baskets/:basketAction/', {}, {
+      _basket_api = $resource(Settings.baseUrl + 'api/review/baskets/:basketAction/', {}, {
         getAll: {method: 'GET', params: { basketAction: 'search', counts: 'True' }, isArray: true},
         search: {method: 'GET', params: { basketAction: 'search', counts: 'True'}, isArray: true}
       });

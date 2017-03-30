@@ -1,7 +1,7 @@
 angular.module('editorial')
-.factory('Occurrence', ['$resource', 'BaseUrl', function ($resource, BaseUrl) {
+.factory('Occurrence', ['$resource', 'Settings', function ($resource, Settings) {
   var services = {},
-      _occurrence = $resource(BaseUrl + 'api/occurrence/occurrence/:occurrenceID/', {}, {
+      _occurrence = $resource(Settings.baseUrl + 'api/occurrence/occurrence/:occurrenceID/', {}, {
         remove: { method: 'DELETE'},
         create: { method: 'POST', params: {occurrenceID: 'new'}},
         createWithHit: { method: 'POST', params: {occurrenceID: 'newWithHit'}},

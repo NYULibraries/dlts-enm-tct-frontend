@@ -1,8 +1,8 @@
 angular.module('editorial')
-.factory('Location', ['$resource', 'BaseUrl', function ($resource, BaseUrl) {
+.factory('Location', ['$resource', 'Settings', function ($resource, Settings) {
   var services = {};
 
-  var _location = $resource(BaseUrl + 'api/epub/location/:locationID/', {}, {
+  var _location = $resource(Settings.baseUrl + 'api/epub/location/:locationID/', {}, {
     allFromDocument: {method: 'GET', params: {allFromDoc: "True"}, isArray: true},
     detail: {method: 'get', isArray: true},
   });

@@ -11,14 +11,10 @@ var editorial = angular.module('editorial', [
   'dndLists'
 ]);
 
-editorial.config(['$resourceProvider',function($resourceProvider) {
+editorial.config(['$resourceProvider', '$locationProvider', '$httpProvider',
+    function($resourceProvider, $locationProvider, $httpProvider) {
   $resourceProvider.defaults.stripTrailingSlashes = false;
-}]);
-
-
-// api settings
-editorial.config(['$httpProvider', function ($httpProvider) {
+  $locationProvider.html5Mode(true);
   $httpProvider.interceptors.push('tokenCleaner');
 }]);
-
 

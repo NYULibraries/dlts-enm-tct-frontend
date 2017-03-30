@@ -1,19 +1,19 @@
 angular.module('editorial')
-.factory('Basket',['BaseUrl','$resource', function (BaseUrl, $resource) {
+.factory('Basket',['Settings','$resource', function (Settings, $resource) {
   var services = {};
 
-  var _singleBasket = $resource(BaseUrl + 'api/hit/basket/:basketID/',{},{
+  var _singleBasket = $resource(Settings.baseUrl + 'api/hit/basket/:basketID/',{},{
     get: {method: 'GET'},
     remove: {method: 'DELETE'},
     detach: {method: 'POST', params: {basketID: 'detach'}},
     add: {method: 'POST', params: {basketID: 'new'}}
   });
 
-  var _singleBasketSpecific = $resource(BaseUrl + 'api/hit/basket/:basketID/:basketAction/', {}, {
+  var _singleBasketSpecific = $resource(Settings.baseUrl + 'api/hit/basket/:basketID/:basketAction/', {}, {
     addType: {method: 'PATCH', params: {basketAction: 'add-type'}}
   });
 
-  var _hitManager = $resource(BaseUrl + 'api/hit/hits/:HitAction/', {}, {
+  var _hitManager = $resource(Settings.baseUrl + 'api/hit/hits/:HitAction/', {}, {
     createNewHit: {method: 'POST', params:{'HitAction': 'add-by-basket'}},
     createNewHitSameSlug: {method: 'POST', params:{'HitAction': 'add-hit-same-slug'}},
     createNewHitDisambiguation: {method: 'PATCH', params: {'HitAction': 'disambiguate'}}
@@ -28,7 +28,7 @@ angular.module('editorial')
   };
 
   services.hitListUrl = function (basket_id) {
-    return BaseUrl + 'api/hit/hits/search/?as_object=True&exclude_baskets=' + basket_id + '&name=';
+    return Settings.baseUrl + 'api/hit/hits/search/?as_object=True&exclude_baskets=' + basket_id + '&name=';
   };
 
   services.addNewHit = function(basketId, hitName, success, failure) {

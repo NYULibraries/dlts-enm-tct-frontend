@@ -15,7 +15,7 @@
           <div ng-hide="loading">
             <ul class="document-list">
               <li ng-repeat="location in document.locations">
-                <a href="#/location/{{ location.id }}">{{ location.localid.replace('_', ' ') }}</a>
+                <a href="/location/{{ location.id }}">{{ location.localid.replace('_', ' ') }}</a>
                 <span class="text-muted">{{ location.content }}</span>
               </li>
             </ul>

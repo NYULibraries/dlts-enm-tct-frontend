@@ -62,7 +62,7 @@ angular.module('editorial')
   $scope.removeDocument = function () {
     Deletion.removeItem({
       title: "Delete Document?",
-      body: 'Are you sure you want to remove the Document "' + document.title + '"?  This will remove all associated occurrences and content.  Any topics that only have occurrences from this document will also be deleted.',
+      body: 'Are you sure you want to remove the Document "' + $scope.document.title + '"?  This will remove all associated occurrences and content.  Any topics that only have occurrences from this document will also be deleted.',
       actionName: 'Delete',
       item: $scope.document,
       list: $scope.documents,

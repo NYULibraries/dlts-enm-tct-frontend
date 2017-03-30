@@ -1,7 +1,7 @@
 angular.module('editorial')
-.factory('Automatic', ['BaseUrl', '$resource', function (BaseUrl, $resource) {
+.factory('Automatic', ['Settings', '$resource', function (Settings, $resource) {
   var services = {},
-      _api = $resource(BaseUrl + 'api/epub/automatic-relations/:basketID/', {}, {
+      _api = $resource(Settings.baseUrl + 'api/epub/automatic-relations/:basketID/', {}, {
         reRun: { method: 'PUT' }
       });
 

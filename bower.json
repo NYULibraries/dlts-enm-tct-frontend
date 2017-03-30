@@ -23,14 +23,15 @@
     "angular-cookies": "^1.5.0",
     "angular-route": "^1.5.0",
     "angular-resource": "^1.5.0",
-    "angucomplete-alt": "^2.2.0",
-    "font-awesome": "fontawesome#^4.5.0",
+    "font-awesome": "fontawesome#^4.7.0",
     "ui-select": "angular-ui-select#^0.14.9",
     "angular-sanitize": "^1.5.0",
-    "angular-modal-service": "^0.9.10",
-    "angular-drag-and-drop-lists": "^1.4.0"
+    "angular-drag-and-drop-lists": "^1.4.0",
+    "angular-modal-service": "^0.11.1",
+    "angucomplete-alt": "^3.0.0"
   },
   "resolutions": {
-    "angular": ">=1.2.18"
+    "angular": "1.6.3",
+    "angucomplete-alt": "^3.0.0"
   }
 }

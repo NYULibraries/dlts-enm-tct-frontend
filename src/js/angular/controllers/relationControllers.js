@@ -6,6 +6,30 @@ angular.module('editorial')
   $scope.hitListUrl = Basket.hitListUrl($routeParams.basketID);
   $scope.bulkRelations = {};
   $scope.selectAll = true;
+  $scope.showForbiddenRelations = false;
+
+  $scope.toggleForbidden = function () {
+    $scope.showForbiddenRelations = !$scope.showForbiddenRelations;
+
+    if ($scope.showForbiddenRelations && !$scope.forbiddenRelations) {
+      $scope.forbiddenLoading = true;
+
+      var forbiddenFetchSuccess = function (response) {
+        $scope.forbiddenLoading = false;
+        for (var i = 0; i < response.length; i++) {
+          response[i].type_name = response[i].direction === 'source' ? response[i].relationtype.role_to : response[i].relationtype.role_from;
+        }
+        $scope.forbiddenRelations = response;
+      }
+
+      var forbiddenFetchFailure = function (response) {
+        $scope.forbiddenLoading = false;
+        console.log(response.data);
+      };
+
+      Relation.forbiddenByBasket($routeParams.basketID, forbiddenFetchSuccess, forbiddenFetchFailure);
+    }
+  };
 
   $scope.bulkRelationDelete = function () {
     var relations_to_delete = [];
@@ -182,5 +206,38 @@ angular.module('editorial')
     Relation.edit(relationData, editRelationSuccess, editRelationFailure);
 
   };
+}]);
 
+
+angular.module('editorial')
+.controller('ForbiddenRelationCtrl', ['$scope', 'Relation', 'Deletion', 'Utils', 
+    function ($scope, Relation, Deletion, Utils) {
+  $scope.deleteForbidden = function () {
+    Deletion.removeItem({
+      title: "Delete forbidden relation?",
+      body: "Are you sure you want to permanently delete the forbidden relation to " + $scope.relation.basket.display_name + "?",
+      actionName: "Delete",
+      item: $scope.relation,
+      list: $scope.forbiddenRelations,
+      deletionFunction: Relation.removeRelation
+    });
+  };
+
+  $scope.unforbid = function () {
+    $scope.relation.forbidden = false;
+    $scope.relation.source = $scope.relation.direction === 'destination' ? $scope.basket.basket.id : $scope.relation.basket.id;
+    $scope.relation.destination = $scope.relation.direction === 'source' ? $scope.basket.basket.id : $scope.relation.basket.id;
+    $scope.relation.relationtype = $scope.relation.relationtype.id;
+
+    var unforbidSuccess = function (response) {
+      $scope.basket.relations.push($scope.relation);
+      Utils.removeFromList($scope.relation, $scope.forbiddenRelations)
+    };
+
+    var unforbidFailure = function (response) {
+      console.log(response.data);
+    }
+
+    Relation.edit($scope.relation, unforbidSuccess, unforbidFailure);
+  };
 }]);

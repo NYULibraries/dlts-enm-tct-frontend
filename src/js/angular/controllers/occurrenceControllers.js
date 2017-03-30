@@ -53,7 +53,7 @@ angular.module('editorial')
 
 
 angular.module('editorial')
-.controller('AddOccurrenceCtrl', ['$scope', 'Occurrence', 'BaseUrl', function ($scope, Occurrence, BaseUrl) {
+.controller('AddOccurrenceCtrl', ['$scope', 'Occurrence', 'Settings', function ($scope, Occurrence, Settings) {
   $scope.addOccurrenceForm = { show: false };
   $scope.basket = {};
   $scope.highlightedText = "";
@@ -75,7 +75,7 @@ angular.module('editorial')
 
   };
 
-  $scope.hitListUrl = BaseUrl + 'api/hit/hits/search/?as_object=True&name=';
+  $scope.hitListUrl = Settings.baseUrl + 'api/hit/hits/search/?as_object=True&name=';
 
   $scope.addOccurrence = function () {
     var addOccurrenceSuccess = function (response) {

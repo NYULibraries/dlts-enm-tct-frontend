@@ -1,12 +1,12 @@
 angular.module('editorial')
-.factory('Document', ['$resource', 'BaseUrl', function ($resource, BaseUrl) {
+.factory('Document', ['$resource', 'Settings', function ($resource, Settings) {
   var services = {},
-      _epub = $resource(BaseUrl + 'api/epub/document/:docID/', {}, {
+      _epub = $resource(Settings.baseUrl + 'api/epub/document/:docID/', {}, {
         all: {method: 'GET', params: {docID: 'all'}, isArray: true},
         detail: {method: 'GET'},
         detailWithOccurrences: {method: 'GET', params: {withOccurrences: "True"}, isArray: true},
       }),
-      _document = $resource(BaseUrl + 'api/occurrence/document/:docID/', {}, {
+      _document = $resource(Settings.baseUrl + 'api/occurrence/document/:docID/', {}, {
         remove: {method: 'DELETE'}
       });
 

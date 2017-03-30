@@ -1,7 +1,7 @@
 angular.module('editorial')
-.factory('Merge', ['$resource', 'BaseUrl', function ($resource, BaseUrl) {
+.factory('Merge', ['$resource', 'Settings', function ($resource, Settings) {
   var services = {},
-      _merging = $resource(BaseUrl + 'api/hit/basket/:basketID/', {}, {
+      _merging = $resource(Settings.baseUrl + 'api/hit/basket/:basketID/', {}, {
         single: {method: 'POST', params: {basketID: 'merge'}},
         mergeByHits: {method: 'PATCH', params: {basketID: 'merge-by-hits'}}
       });

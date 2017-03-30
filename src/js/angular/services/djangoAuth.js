@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('editorial')
-  .service('djangoAuth', ['$q', '$http', '$cookies', '$rootScope', 'BaseUrl',function djangoAuth($q, $http, $cookies, $rootScope, BaseUrl) {
+  .service('djangoAuth', ['$q', '$http', '$cookies', '$rootScope', 'Settings',function djangoAuth($q, $http, $cookies, $rootScope, Settings) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     var service = {
         /* START CUSTOMIZATION HERE */
         // Change this to point to your Django REST Auth API
         // e.g. /api/rest-auth  (DO NOT INCLUDE ENDING SLASH)
-        'API_URL': BaseUrl + 'rest-auth',
+        'API_URL': Settings.baseUrl + 'rest-auth',
         // Set use_session to true to use Django sessions to store security token.
         // Set use_session to false to store the security token locally and transmit it as a custom header.
         'use_session': false,
@@ -36,11 +36,14 @@ angular.module('editorial')
                 params: params,
                 data: data
             })
-            .success(angular.bind(this,function(data, status, headers, config) {
-                deferred.resolve(data, status);
-            }))
-            .error(angular.bind(this,function(data, status, headers, config) {
+            .then(function(response) {
+                deferred.resolve(response.data, response.status);
+            }, function(response) {
                 console.log("error syncing with: " + url);
+
+                var data = response.data,
+                    stats = response.status;
+
                 // Set request status
                 if(data){
                     data.status = status;
@@ -62,8 +65,8 @@ angular.module('editorial')
                         data.non_field_errors = ["Server timed out. Please try again."];
                     }
                 }
-                deferred.reject(data, status, headers, config);
-            }));
+                deferred.reject(data, status, response.headers, response.config);
+            });
             return deferred.promise;
         },
         'register': function(username,password1,password2,email,more){

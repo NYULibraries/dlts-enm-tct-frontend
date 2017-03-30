@@ -3,7 +3,7 @@
     <div class="col-xs-12 col-md-8">
       <div class="panel panel-primary">
         <div class="panel-heading">
-          <a href="#/location/{{location.previous_location_id}}" ng-show="location.previous_location_id" class="btn btn-success location_control_left">
+          <a href="/location/{{location.previous_location_id}}" ng-show="location.previous_location_id" class="btn btn-success location_control_left">
             <i class="fa fa-lg fa-chevron-left"></i>
             <span class="full-text">Previous Page </span>
           </a>
@@ -12,7 +12,7 @@
             {{ location.content.content_descriptor }} 
             <span ng-show="location.context">({{ location.context }})</span>
           </span>
-          <a href="#/location/{{location.next_location_id}}" ng-show="location.next_location_id" class="btn btn-success location_control_right">
+          <a href="/location/{{location.next_location_id}}" ng-show="location.next_location_id" class="btn btn-success location_control_right">
             <span class="full-text">Next Page </span>
             <i class="fa fa-lg fa-chevron-right"></i>
           </a>
@@ -38,15 +38,15 @@
           <ul style="list-style:none;">
             <li ng-repeat="occurrence in location.occurrences">
 
-              <a href="#/location/{{ occurrence.ring_prev }}" ng-show="occurrence.ring_prev">
+              <a href="/location/{{ occurrence.ring_prev }}" ng-show="occurrence.ring_prev">
                 <i class="fa fa-fw fa-chevron-left"></i>
               </a>
               <i class="fa fa-fw" ng-hide="occurrence.ring_prev">&nbsp;</i> <!-- spacer so elements line up if no ring_prev -->
-              <a href="#/basket/{{ occurrence.basket.id }}">
+              <a href="/basket/{{ occurrence.basket.id }}">
                 {{ occurrence.basket.display_name }}
               </a>
 
-              <a href="#/location/{{ occurrence.ring_next }}" ng-show="occurrence.ring_next">
+              <a href="/location/{{ occurrence.ring_next }}" ng-show="occurrence.ring_next">
                 <i class="fa fa-fw fa-chevron-right"></i>
               </a>
 

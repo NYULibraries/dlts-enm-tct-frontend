@@ -32,6 +32,26 @@ angular.module('editorial')
 
 angular.module('editorial')
 .controller('SingleWeblinkCtrl', ['$scope', 'Weblink', 'Deletion', function ($scope, Weblink, Deletion) {
+  $scope.showLinkEditForm = {show: false};
+
+  $scope.triggerEditLinkForm = function () {
+    $scope.tempLink = $.extend({}, $scope.weblink);
+
+    $scope.showLinkEditForm.show = true;
+  };
+
+  $scope.applyWeblinkEdit = function () {
+    var editSuccess = function (response) {
+      $scope.weblink = response;
+      $scope.showLinkEditForm.show = false;
+    };
+
+    var editFailure = function (response) {
+      console.log(response);
+    };
+
+    Weblink.update($scope.tempLink, editSuccess, editFailure);
+  };
 
   $scope.removeWeblink= function () {
     Deletion.removeItem({

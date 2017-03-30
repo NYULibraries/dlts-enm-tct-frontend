@@ -1,0 +1,49 @@
+{
+    "docs": [
+        {
+            "location": "/",
+            "text": "Topic Curation Toolkit\n\n\nThe \nEnhanced Networked Monographs Topic Curation Toolkit\n's Editorial Interface is designed for managing and curating our topic map of Index entries.",
+            "title": "Home"
+        },
+        {
+            "location": "/#topic-curation-toolkit",
+            "text": "The  Enhanced Networked Monographs Topic Curation Toolkit 's Editorial Interface is designed for managing and curating our topic map of Index entries.",
+            "title": "Topic Curation Toolkit"
+        },
+        {
+            "location": "/installation/",
+            "text": "Building the App\n\n\nThe \nENM Topic Curation Toolkit Frontend\n is built using gulp, with dependencies from \nNPM\n (for the build scripts) and \nBower\n (for packages that are included in the frontend itself, such as angular and bootstrap).  \n\n\n\n\nNote\n\n\nThis page describes the process of building the \nENM Topic Curation Toolkit Frontend\n from source.  Once built, the build directories contain all the necessary HTML, CSS, and Javascript to function as a standalone webapp, and can be deployed without any of the local dependencies required for our build scripts (in other words, without everything in node_modules).  The instructions on this page are about the requirements for \nbuilding\n the application, not requirements for \ndeployment\n.  The app itself is self-contained once built.\n\n\n\n\nRequirements\n\n\nThe following software must be installed on the computer in order to run the build scripts:\n\n\n\n\nNode >= 7.7.0\n\n\nNPM >= 4.1.2\n\n\nBower >= 1.8.0\n\n\n\n\nMost installations of Node also include NPM. The instructions for installing Node are beyond the scope of this guide, but are avaialbe on the \nNode.js webste\n. Once node and NPM are installed, you can install Bower with:\n\n\nnpm install -g bower\n\n\n\n\n\nInstalling Dependencies\n\n\nTo install build dependencies from npm, type\n\n\nnpm install\n\n\n\n\n\nIn the same directory as the \npackage.json\n file.  In the same directory, where \nbower.json\n is located, then type \n\n\nbower install\n\n\n\n\n\nto install the bower dependencies.\n\n\nBuilding the project\n\n\nThe build scripts include the ability to create two versions of the \nENM Topic Curation Toolkit Frontend\n:\n\n\n\n\n\n\nDevelopment Version\n: This version keeps the files separate and unminified.  Best for developing and debugging.  By default, this version is output into a folder \ndist.dev\n.\n\n\n\n\n\n\nProduction Version\n: This version concatenates and minifies all files.  Best for production use.  By default, this version is output into a folder \ndist.prod\n.\n\n\n\n\n\n\nTo build the development version of the app, use the following command:\n\n\ngulp clean-build-app-dev\n\n\n\n\n\nSimilarly, to build the production version, type\n\n\ngulp clean-build-app-prod\n\n\n\n\n\nThe build tools also include a development server for checking the work locally.  To both build the dev project \nand\n start the development server, type\n\n\ngulp watch-dev\n\n\n\n\n\nBy default, you can access the development server at \nlocalhost:9000\n.  The \ngulp watch-dev\n command will also watch for source file changes and rebuild whenever changes are made as long as the development server is running. If you use \nLiveReload\n it will also automatically refresh the code in the browser for you.  You can similarly start the development server with the production version of the app with\n\n\ngulp watch-prod",
+            "title": "Building the App"
+        },
+        {
+            "location": "/installation/#building-the-app",
+            "text": "The  ENM Topic Curation Toolkit Frontend  is built using gulp, with dependencies from  NPM  (for the build scripts) and  Bower  (for packages that are included in the frontend itself, such as angular and bootstrap).     Note  This page describes the process of building the  ENM Topic Curation Toolkit Frontend  from source.  Once built, the build directories contain all the necessary HTML, CSS, and Javascript to function as a standalone webapp, and can be deployed without any of the local dependencies required for our build scripts (in other words, without everything in node_modules).  The instructions on this page are about the requirements for  building  the application, not requirements for  deployment .  The app itself is self-contained once built.",
+            "title": "Building the App"
+        },
+        {
+            "location": "/installation/#requirements",
+            "text": "The following software must be installed on the computer in order to run the build scripts:   Node >= 7.7.0  NPM >= 4.1.2  Bower >= 1.8.0   Most installations of Node also include NPM. The instructions for installing Node are beyond the scope of this guide, but are avaialbe on the  Node.js webste . Once node and NPM are installed, you can install Bower with:  npm install -g bower",
+            "title": "Requirements"
+        },
+        {
+            "location": "/installation/#installing-dependencies",
+            "text": "To install build dependencies from npm, type  npm install  In the same directory as the  package.json  file.  In the same directory, where  bower.json  is located, then type   bower install  to install the bower dependencies.",
+            "title": "Installing Dependencies"
+        },
+        {
+            "location": "/installation/#building-the-project",
+            "text": "The build scripts include the ability to create two versions of the  ENM Topic Curation Toolkit Frontend :    Development Version : This version keeps the files separate and unminified.  Best for developing and debugging.  By default, this version is output into a folder  dist.dev .    Production Version : This version concatenates and minifies all files.  Best for production use.  By default, this version is output into a folder  dist.prod .    To build the development version of the app, use the following command:  gulp clean-build-app-dev  Similarly, to build the production version, type  gulp clean-build-app-prod  The build tools also include a development server for checking the work locally.  To both build the dev project  and  start the development server, type  gulp watch-dev  By default, you can access the development server at  localhost:9000 .  The  gulp watch-dev  command will also watch for source file changes and rebuild whenever changes are made as long as the development server is running. If you use  LiveReload  it will also automatically refresh the code in the browser for you.  You can similarly start the development server with the production version of the app with  gulp watch-prod",
+            "title": "Building the project"
+        },
+        {
+            "location": "/setup/",
+            "text": "API Endpoints\n\n\nThe file \nsrc/js/angular/settings.js\n contains the Base URL to be used for all API calls: in other words, the location of the \nENM Topic Curation Toolkit\n API, e.g. \nhttps://nyuapi.infoloom.nyc/\n.\n\n\nAll other configuration should be done on the backend side.",
+            "title": "Configuration"
+        },
+        {
+            "location": "/setup/#api-endpoints",
+            "text": "The file  src/js/angular/settings.js  contains the Base URL to be used for all API calls: in other words, the location of the  ENM Topic Curation Toolkit  API, e.g.  https://nyuapi.infoloom.nyc/ .  All other configuration should be done on the backend side.",
+            "title": "API Endpoints"
+        }
+    ]
+}

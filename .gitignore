@@ -6,3 +6,4 @@ bower_components/
 # built versions #
 ##################
 dist.dev/
+dist.prod/

@@ -1,8 +1,8 @@
 angular.module('editorial')
-.factory('Relation',['BaseUrl', '$resource', function (BaseUrl, $resource) {
+.factory('Relation',['Settings', '$resource', function (Settings, $resource) {
   var services = {};
 
-  var _relatedBasket = $resource(BaseUrl + 'api/relation/:relatedBasketID/',{},{
+  var _relatedBasket = $resource(Settings.baseUrl + 'api/relation/:relatedBasketID/',{},{
     remove: {method: 'DELETE'},
     defaultRelation: {method: 'POST',params: {relatedBasketID: 'new-default'}},
     full: {method: 'POST', params: {relatedBasketID: 'new'}},
@@ -10,12 +10,16 @@ angular.module('editorial')
     bulkDelete: {method: 'PATCH', params: {relatedBasketID: 'bulk-delete'}}
   });
 
-  var _rtypes = $resource(BaseUrl + 'api/relation/rtype/:rtypeID/', {}, {
+  var _rtypes = $resource(Settings.baseUrl + 'api/relation/rtype/:rtypeID/', {}, {
     all: {method: 'GET', params: {rtypeID: 'all'}, isArray: true},
     add: {method: 'POST', params: {rtypeID: 'new'}},
     withCounts: {method: 'GET', params: {rtypeID: 'with-counts'}, isArray: true},
     destroy: {method: 'DELETE'},
     update: {method: 'PUT'}
+  });
+
+  var _details = $resource(Settings.baseUrl + 'api/relation/:detailType/:itemID/', {}, {
+    forbiddenByBasket: { method: 'GET', params: { detailType: 'forbidden' }, isArray: true},
   });
 
   services.allTypes = function () {
@@ -56,6 +60,10 @@ angular.module('editorial')
 
   services.bulkDelete = function (relation_ids, success, failure) {
     return _relatedBasket.bulkDelete({}, {relation_ids: relation_ids}, success, failure);
+  };
+
+  services.forbiddenByBasket = function (basket_id, success, failure) {
+    return _details.forbiddenByBasket({ itemID: basket_id }, success, failure);
   };
 
   return services;

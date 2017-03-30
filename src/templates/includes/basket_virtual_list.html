@@ -1,6 +1,6 @@
 <div class="canvas" ng-style="canvasHeight">
     <div ng-repeat="basket in visibleProvider" ng-style="basket.styles" class="basket-item">
-      <a href="#/basket/{{ basket.id }}" ng-click="setCurrentHit(basket.id)">{{ basket.display_name }}</a>
+      <a href="/basket/{{ basket.id }}" ng-click="setCurrentHit(basket.id)">{{ basket.display_name }}</a>
       <span ng-if="basket.occurrence_counts" class="text-muted">({{ basket.occurrence_counts }})</span>
 
       <!-- Review Controls -->

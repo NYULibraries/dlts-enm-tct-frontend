@@ -20,17 +20,17 @@
                   </span>
                   <ul>
                     <li ng-repeat="occurrence in location.occurrences" ng-controller="SingleOccurrenceOnDocumentCtrl">
-                      <a href="#/location/{{ occurrence.ring_prev }}" ng-show="occurrence.ring_prev">
+                      <a href="/location/{{ occurrence.ring_prev }}" ng-show="occurrence.ring_prev">
                         <i class="fa fa-fw fa-chevron-left"></i>
                       </a>
                       <i class="fa fa-fw" ng-hide="occurrence.ring_prev">&nbsp;</i> <!-- spacer so elements line up if no ring_prev -->
                       <button ng-click="removeOccurrence()" class="btn btn-xs btn-danger">
-                        <i class="fa fa-times"></i> 
+                        <i class="fa fa-times"></i>
                       </button>
-                      <a href="#/basket/{{ occurrence.basket.id }}">
+                      <a href="/basket/{{ occurrence.basket.id }}">
                          {{ occurrence.basket.display_name }}
                       </a>
-                      <a href="#/location/{{ occurrence.ring_next }}" ng-show="occurrence.ring_next">
+                      <a href="/location/{{ occurrence.ring_next }}" ng-show="occurrence.ring_next">
                         <i class="fa fa-fw fa-chevron-right"></i>
                       </a>
                     </li>
@@ -62,8 +62,8 @@
                   <h4 ng-show="locations[0].document.author" class="text-muted title-header">by {{ locations[0].document.author }} <a href="{{ locations[0].filepath }}" target="_blank"><i class="fa fa-external-link"></i></a></h4>
                 </div>
               </div>
-              
-              <p ng-if="location.content.content_descriptor !== 'Title'" class="content" id="location-{{ location.id }}" >{{ location.content.text }}</p>
+
+              <div ng-if="location.content.content_descriptor !== 'Title'" class="content" id="location-{{ location.id }}" ng-bind-html="location.content.text"></div>
             </div>
 
           </div>
@@ -72,4 +72,3 @@
     </div>
   </div>
 </div>
-

@@ -1,4 +1,5 @@
 angular.module('editorial')
 .constant('Settings', {
-    separatePageLocations: true
+  separatePageLocations: true,
+  baseUrl: 'https://nyuapi.infoloom.nyc/'
 });

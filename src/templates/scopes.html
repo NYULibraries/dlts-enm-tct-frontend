@@ -9,7 +9,7 @@
           <li ng-repeat="scope in scopes" ng-controller="SingleScopeCtrl">
 
             <div ng-hide="editScopeForm.show">
-              <a href="#/hit/list/by-scope/{{ scope.scope }}">{{ scope.scope }}</a>
+              <a href="/hit/list/by-scope/{{ scope.scope }}">{{ scope.scope }}</a>
               <span class="text-muted">(used {{ scope.count }} times)</span>
               <a href="" ng-click="triggerEditScope()">
                 <i class="fa fa-pencil"></i>

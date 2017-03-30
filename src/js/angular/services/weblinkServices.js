@@ -1,8 +1,8 @@
 angular.module('editorial')
-.factory('Weblink', ['$resource', 'BaseUrl', function ($resource, BaseUrl) {
+.factory('Weblink', ['$resource', 'Settings', function ($resource, Settings) {
   var services = {};
 
-  var _weblinkAPI = $resource(BaseUrl + 'api/weblink/:linkID/', {}, {
+  var _weblinkAPI = $resource(Settings.baseUrl + 'api/weblink/:linkID/', {}, {
     'newLink': {method: 'POST', params: {linkID: 'new'}},
     'discard': {method: 'PATCH'},
     'list': {method: 'GET', params: {linkID: 'list'}, isArray: true},
@@ -24,7 +24,7 @@ angular.module('editorial')
   };
 
   services.update = function (link_data, success, failure) {
-    return _weblinkAPI.update({}, link_data, success, failure);
+    return _weblinkAPI.update({linkID: link_data.id}, link_data, success, failure);
   };
 
   services.batch = function (bulk_data, success, failure) {

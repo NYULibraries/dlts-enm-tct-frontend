@@ -1,8 +1,8 @@
 angular.module('editorial')
-.factory('Scope', ['BaseUrl', '$resource', function (BaseUrl, $resource) {
+.factory('Scope', ['Settings', '$resource', function (Settings, $resource) {
   var services = {};
 
-  var _scope = $resource(BaseUrl + 'api/hit/scope/:scopeAction/', {}, {
+  var _scope = $resource(Settings.baseUrl + 'api/hit/scope/:scopeAction/', {}, {
     all: {method: 'GET', isArray: true, params: {scopeAction: 'all'}},
     new: {method: 'POST', params: {scopeAction: 'new'}},
     update: {method: 'PUT'},

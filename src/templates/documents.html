@@ -10,12 +10,12 @@
             <button ng-click="removeDocument()" class="btn btn-xs btn-danger">
               <i class="fa fa-times"></i>
             </button>
-            <a href="#/document/{{document.id}}/detail">
+            <a href="/document/{{document.id}}/detail">
               <span ng-show="document.author">{{ document.author }}, </span>
               <strong><em>{{ document.title }} </em></strong>
             </a>
             <span class="text-muted">({{ document.publisher }})</span>
-            [<a href="#/basket/document/{{ document.id }}">Topics from this Document</a>]
+            [<a href="/basket/document/{{ document.id }}">Topics from this Document</a>]
           </li>
         </ul>
       </div>

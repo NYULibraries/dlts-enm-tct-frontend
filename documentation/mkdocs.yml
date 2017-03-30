@@ -1,0 +1,22 @@
+site_name: ENM Topic Curation Toolkit Frontend Documentation
+
+pages:
+  - Home: index.md
+  - "Getting Started":
+      - "Building the App": installation.md
+      - Configuration: setup.md
+
+theme: 'material'
+
+extra:
+  logo: 'images/Logo.png'
+
+extra_css:
+  - 'stylesheets/otl_docs.css'
+
+site_favicon: 'images/favicon.ico'
+
+markdown_extensions:
+    - toc
+    - admonition
+    - codehilite(guess_lang=false)

@@ -199,6 +199,16 @@ angular.module('editorial')
         }],
       }
     })
+    .when('/reconciliation', {
+      templateUrl: 'templates/reconciliation.html',
+      controller: 'ReconciliationCtrl',
+      resolve: {
+        authenticated: ['djangoAuth', function(djangoAuth){
+          // MAKE TRUE FOR PRODUCTION
+          return djangoAuth.authenticationStatus(true);
+        }],
+      }
+    })
     .when('/login', {
       templateUrl: 'templates/auth/login.html'
     })

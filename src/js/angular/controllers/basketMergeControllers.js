@@ -1,6 +1,6 @@
 angular.module('editorial')
-.controller('MergeBasketCtrl', ['$scope', 'Merge', '$route', 'BaseUrl', 'ModalService',
-    function ($scope, Merge, $route, BaseUrl, ModalService) {
+.controller('MergeBasketCtrl', ['$scope', 'Merge', '$route', 'Settings', 'ModalService',
+    function ($scope, Merge, $route, Settings, ModalService) {
   $scope.showMergeForm = { show: false };
   $scope.merging = false;
   $scope.hitToMerge = {};
@@ -16,7 +16,7 @@ angular.module('editorial')
   };
 
   $scope.showMergeTemplate = function () {
-    $scope.hitListUrl = BaseUrl + 'api/hit/hits/search/?exclude_basket=' + $scope.basket.basket.id +
+    $scope.hitListUrl = Settings.baseUrl + 'api/hit/hits/search/?exclude_basket=' + $scope.basket.basket.id +
       '&as_object=True&name=';
     $scope.showMergeForm.show = true;
     $scope.$broadcast('angucomplete-alt:clearInput', 'merge_angucomplete');

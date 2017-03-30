@@ -1,7 +1,7 @@
 angular.module('editorial')
-.factory('Index', ['BaseUrl', '$resource', function (BaseUrl, $resource) {
+.factory('Index', ['Settings', '$resource', function (Settings, $resource) {
   var services = {},
-      _api = $resource(BaseUrl + 'api/epub/index/:indexID/', {}, {
+      _api = $resource(Settings.baseUrl + 'api/epub/index/:indexID/', {}, {
         fromLocation: {method: 'GET', isArray: true}
       });
 

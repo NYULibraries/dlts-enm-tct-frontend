@@ -1,8 +1,8 @@
 angular.module('editorial')
-.factory('Ttype',['BaseUrl', '$resource', function (BaseUrl, $resource) {
+.factory('Ttype',['Settings', '$resource', function (Settings, $resource) {
   var services = {};
 
-  var _ttype = $resource(BaseUrl + 'api/topic/ttype/:ttypeID/', {}, {
+  var _ttype = $resource(Settings.baseUrl + 'api/topic/ttype/:ttypeID/', {}, {
     all: {method: 'GET', params: {ttypeID: 'all'}, isArray: true},
     discard: {method: 'PATCH'},
     withCounts: {method: 'GET', params: {ttypeID: 'withCounts'}, isArray: true},

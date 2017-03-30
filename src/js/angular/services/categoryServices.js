@@ -1,7 +1,7 @@
 angular.module('editorial')
-.factory('Category', ['$resource', 'BaseUrl', function ($resource, BaseUrl) {
+.factory('Category', ['$resource', 'Settings', function ($resource, Settings) {
   var services = {},
-      _categoryAPI = $resource(BaseUrl+'api/category/:categoryID/', {}, {
+      _categoryAPI = $resource(Settings.baseUrl +'api/category/:categoryID/', {}, {
         remove: {method: 'DELETE'}
       });
 

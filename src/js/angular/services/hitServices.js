@@ -1,5 +1,5 @@
 angular.module('editorial')
-.factory('Hit', ['$resource', 'BaseUrl', 'Utils', function ($resource, BaseUrl, Utils) {
+.factory('Hit', ['$resource', 'Settings', 'Utils', function ($resource, Settings, Utils) {
   var services = {},
       _storedList,
       _currentIndex, 
@@ -19,7 +19,7 @@ angular.module('editorial')
       };
 
 
-  var _multipleHits = $resource(BaseUrl + 'api/hit/hits/:hitAction/',{},{
+  var _multipleHits = $resource(Settings.baseUrl + 'api/hit/hits/:hitAction/',{},{
     search: {method:'GET', params: {hitAction: 'search'}, isArray: true},
     byType: {method:'GET', params: {hitAction: 'search'}, isArray: true},
     getAll: {method:'GET', params: {hitAction: 'all'}, isArray: true},
@@ -29,7 +29,7 @@ angular.module('editorial')
     byScope: {method: 'GET', params: {hitAction: 'search'}, isArray: true}
   });
 
-  var _singleHit = $resource(BaseUrl + 'api/hit/hits/:process/:hitID/',{},{
+  var _singleHit = $resource(Settings.baseUrl + 'api/hit/hits/:process/:hitID/',{},{
     update: {method:'PUT', params:{'process' : 'update'}},
     deletehit: {method:'DELETE', params:{'process' : 'delete'}},
     unhide: {method:'GET', params:{'process': 'unhide'}},
@@ -141,11 +141,9 @@ angular.module('editorial')
     var offset = 1,
         previous= _storedList[_currentIndex - offset];
 
-    if (previous) {
-      while (previous.basket === _storedList[_currentIndex].basket) {
-        offset++;
-        previous = _storedList[_currentIndex - offset];
-      }
+    while (previous && previous.basket === _storedList[_currentIndex].basket) {
+      offset++;
+      previous = _storedList[_currentIndex - offset];
     }
 
     return previous;

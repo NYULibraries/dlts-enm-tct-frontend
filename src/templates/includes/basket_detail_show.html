@@ -68,7 +68,7 @@
             <button ng-click="removeTtype()" class="btn btn-xs btn-danger">
               <i class="fa fa-times"></i>
             </button>
-            <a href="#/hit/list/by-type/{{ type.ttype }}">{{ type.ttype }}</a>
+            <a href="/hit/list/by-type/{{ type.ttype }}">{{ type.ttype }}</a>
           </li>
         </ul>
       </div>
@@ -116,12 +116,12 @@
     </div>
 
     <div class="basket-nav" ng-controller="BasketNavCtrl">
-      <a href="#/basket/{{ previousHit.basket }}" ng-show="previousHit" class="btn btn-primary location_control_left" ng-click="setPreviousHit(previousHit)">
+      <a href="/basket/{{ previousHit.basket }}" ng-show="previousHit" class="btn btn-primary location_control_left" ng-click="setPreviousHit(previousHit)">
         <i class="fa fa-lg fa-chevron-left"></i>
         <span class="full-text">Previous Topic </span>
       </a>
 
-      <a href="#/basket/{{ nextHit.basket }}" ng-show="nextHit" class="btn btn-primary location_control_right" ng-click="setNextHit(nextHit)">
+      <a href="/basket/{{ nextHit.basket }}" ng-show="nextHit" class="btn btn-primary location_control_right" ng-click="setNextHit(nextHit)">
         <span class="full-text">Next Topic </span>
         <i class="fa fa-lg fa-chevron-right"></i>
       </a>
@@ -142,7 +142,7 @@
           <div class="checkbox" ng-repeat="relation in basket.relations" ng-controller="SingleRelationCtrl">
             <label for="relation-{{ relation.id }}">
               <input type="checkbox" ng-model="bulkRelations[relation.id]" id="relation-{{ relation.id }}" name="relation-group" />
-              <a href="/#/basket/{{relation.basket.id}}/" title="{{ relation.type_name }}">
+              <a href="/basket/{{relation.basket.id}}/" title="{{ relation.type_name }}">
                 <strong ng-hide="relation.type_name === 'Generic'">{{ relation.type_name }} </strong>
                 {{ relation.basket.display_name }}
               </a>
@@ -155,6 +155,35 @@
             </label>
           </div>
         </form>
+
+      </div>
+
+      <div ng-show="showForbiddenRelations" class="forbidden-list">
+        <hr />
+        <div class="panel-body">
+          <h4>Forbidden Relations</h4>
+          <div class="text-center" ng-show="forbiddenLoading">
+            <i class="fa fa-spinner fa-pulse"></i>
+          </div>
+          <div ng-hide="forbiddenLoading">
+            <span class="text-muted" ng-if="forbiddenRelations.length === 0">No Forbidden Relations on this Topic</span>
+            <ul style="list-style:none">
+              <li ng-repeat="relation in forbiddenRelations" ng-controller="ForbiddenRelationCtrl">
+                <button ng-click="unforbid()" class="btn btn-xs btn-danger">
+                  <i class="fa fa-arrow-up"></i>
+                </button>
+                <button ng-click="deleteForbidden()" class="btn btn-xs btn-danger">
+                  <i class="fa fa-times"></i>
+                </button>
+                <a href="/basket/{{relation.basket.id}}/" title="{{ relation.type_name }}">
+                  <strong ng-hide="relation.type_name === 'Generic'">{{ relation.type_name }} </strong>
+                  {{ relation.basket.display_name }}
+                </a>
+              </li>
+            </ul>
+
+          </div>
+        </div>
       </div>
 
       <div class="panel-footer" ng-controller="NewRelatedBasketCtrl">
@@ -171,6 +200,9 @@
           <span ng-if="!selectAll">
             <i class="fa fa-square-o"></i><span class="full-text"> Deselect All</span>
           </span>
+        </button>
+        <button class="btn btn-danger btn-footer" ng-click="toggleForbidden()" ng-hide="showRelationForm.show">
+          <i class="fa fa-ban"></i><span ng-if="!showForbiddenRelations" class="full-text"> Show Forbidden</span><span ng-if="showForbiddenRelations" class="full-text"> Hide Forbidden</span>
         </button>
         <div  id="new-relation" ng-show="showRelationForm.show">
           <div ng-include="relationForm"></div>
@@ -193,7 +225,7 @@
             <button ng-click="moveOccurrence()" class="btn btn-xs btn-danger">
               <i class="fa fa-sign-out"></i>
             </button>
-            <a href="#/location/{{occurrence.location.id}}">
+            <a href="/location/{{occurrence.location.id}}">
               {{ occurrence.location.document.author }}<span ng-show="occurrence.location.document.author">,</span>
               <em>{{ occurrence.location.document.title }}</em><span ng-show="occurrence.location.localid">, </span>
                 {{ occurrence.location.localid.replace('_',' ') }}
@@ -221,6 +253,66 @@
           </div>
           <input type="submit" class="btn btn-primary" name="submit" value="Add" />
           <cancel-button state-variable="showOccurrenceForm"></cancel-button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Weblinks -->
+    <div class="panel panel-warning" ng-controller="AllWeblinksCtrl">
+      <div class="panel-heading">
+        <h3 class="panel-title">Weblinks</h3>
+      </div>
+
+      <div class="panel-body">
+        <ul class="weblinks">
+
+          <!-- Single Weblink -->
+          <li ng-repeat="weblink in weblinks" ng-controller="SingleWeblinkCtrl">
+            <div ng-hide="showLinkEditForm.show">
+              <button ng-click="removeWeblink()" class="btn btn-xs btn-danger">
+                <i class="fa fa-times"></i>
+              </button>
+              <a target="_blank" href="{{ weblink.url }}">{{ weblink.content }}</a>
+              <a href="" ng-click="triggerEditLinkForm()">
+                <i class="fa fa-pencil fa-fw"></i>
+              </a>
+            </div>
+            <form ng-show="showLinkEditForm.show" ng-submit="applyWeblinkEdit()" class="form-panel">
+              <div class="form-group">
+                <label for="edit_link_content_{{ weblink.id }}">Label</label>
+                <input ng-model="tempLink.content" type="text" id="edit_link_content_{{ weblink.id }}" class="form-control" />
+              </div>
+
+              <div class="form-group">
+                <label for="edit_link_url_{{ weblink.id }}" >Url</label>
+                <input ng-model="tempLink.url" type="url" id="edit_link_url_{{ placement.id }}" class="form-control" />
+              </div>
+
+              <input class="btn btn-primary" type="submit" value="Submit" />
+              <cancel-button state-variable="showLinkEditForm"></cancel-button>
+            </form>
+          </li><!-- end Single Weblink -->
+        </ul>
+      </div>
+
+      <div class="panel-footer" ng-controller="NewWebLinkCtrl">
+        <button class="btn btn-info btn-footer" ng-click="triggerAddLink()" ng-hide="showLinkForm.show">
+          <i class="fa fa-plus"></i><span class="full-text"> Add Occurrence</span>
+        </button>
+
+        <form ng-show="showLinkForm.show" ng-submit="addLink()">
+          <div class="form-group">
+            <label for="new-link-url">URL</label>
+            <input id="new-link-url" type="text" class="form-control" ng-model="newLink.url" />
+          </div>
+
+          <div class="form-group">
+            <label for="new-link-content">Label</label>
+            <input id="new-link-content" type="text" class="form-control" ng-model="newLink.content" />
+          </div>
+
+          <input type="submit" class="btn btn-primary" name="submit" value="Add" />
+          <cancel-button state-variable="showLinkForm"></cancel-button>
         </form>
       </div>
     </div>

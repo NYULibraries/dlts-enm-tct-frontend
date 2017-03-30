@@ -6,8 +6,8 @@ angular.module('editorial')
 
 
 angular.module('editorial')
-.controller('NewReportCtrl', ['$scope', 'Report', 'BaseUrl', 
-    function ($scope, Report, BaseUrl) {
+.controller('NewReportCtrl', ['$scope', 'Report', 'Settings', 
+    function ($scope, Report, Settings) {
   $scope.generating = false;
   $scope.showNewReportForm = { show: false };
 
@@ -15,7 +15,7 @@ angular.module('editorial')
     $scope.error = "";
 
     var reportSuccess = function (response) {
-      response.location = BaseUrl.slice(0, BaseUrl.length - 1) + response.location;
+      response.location = Settings.baseUrl.slice(0, Settings.baseUrl.length - 1) + response.location;
       $scope.reports.push(response);
       $scope.generating = false;
       $scope.showNewReportForm.show = false;  
