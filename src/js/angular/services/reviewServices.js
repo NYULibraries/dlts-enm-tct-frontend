@@ -11,8 +11,8 @@ angular.module('editorial')
         getAll: {method:'GET', params: {hitAction: 'all'}, isArray: true},
       }),
       _basket_api = $resource(Settings.baseUrl + 'api/review/baskets/:basketAction/', {}, {
-        getAll: {method: 'GET', params: { basketAction: 'search', counts: 'True' }, isArray: true},
-        search: {method: 'GET', params: { basketAction: 'search', counts: 'True'}, isArray: true}
+        getAll: {method: 'GET', params: { basketAction: 'search', occurrence_counts: 'True', relation_counts: 'True' }, isArray: true},
+        search: {method: 'GET', params: { basketAction: 'search', occurrence_counts: 'True', relation_counts: 'True' }, isArray: true}
       });
 
   services.set = function (basketID, reviewed, changed, success, failure) {

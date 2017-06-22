@@ -11,6 +11,8 @@ angular.module('editorial')
     $scope.tempHit.preferred = $scope.tempHit.display === 'preferred' ? true : false;
     $scope.tempHit.hidden = $scope.tempHit.display === 'hidden' ? true : false;
 
+    console.log($scope.tempHit);
+
     Hit.update($scope.hit.id, $scope.tempHit, $scope.hitChangeSuccess, $scope.hitChangeFailure);
   };
 }]);

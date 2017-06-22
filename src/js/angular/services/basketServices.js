@@ -6,7 +6,9 @@ angular.module('editorial')
     get: {method: 'GET'},
     remove: {method: 'DELETE'},
     detach: {method: 'POST', params: {basketID: 'detach'}},
-    add: {method: 'POST', params: {basketID: 'new'}}
+    add: {method: 'POST', params: {basketID: 'new'}},
+    all: { method: 'GET', params: { basketID: 'all' }, isArray: true },
+    update: { method: 'PUT' }
   });
 
   var _singleBasketSpecific = $resource(Settings.baseUrl + 'api/hit/basket/:basketID/:basketAction/', {}, {
@@ -18,6 +20,10 @@ angular.module('editorial')
     createNewHitSameSlug: {method: 'POST', params:{'HitAction': 'add-hit-same-slug'}},
     createNewHitDisambiguation: {method: 'PATCH', params: {'HitAction': 'disambiguate'}}
   });
+
+  services.update = function (basketID, basketData, success, failure) {
+    return _singleBasket.update({basketID: basketID}, basketData, success, failure);
+  };
 
   services.detail = function(basketID, success, failure) {
     return _singleBasket.get({basketID: basketID, add_types: 'True'}, success, failure);
@@ -81,6 +87,10 @@ angular.module('editorial')
       }
 
       return basket;
+  };
+
+  services.all = function (success, failure) {
+    return _singleBasket.all(success, failure);
   };
 
   return services;

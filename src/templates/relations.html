@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{ relationType }}</h3>
+      </div>
+      <div class="panel-body">
+
+        <div class="loading-wrapper text-center" ng-show="loading">
+          <i class="fa fa-3x fa-pulse fa-spinner text-muted"></i>
+        </div>
+
+        <div ng-if="relations" ng-hide="loading">
+          <h3 class="template-title">{{ relations.length }} relation<span ng-if="relations.length !== 1">s</span> found</h3>
+
+          <ui-virtual-list
+             ui-data-provider="relations"
+             offset="210"
+             template-url="templates/includes/relation_virtual_list.html" >
+          </ui-virtual-list>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

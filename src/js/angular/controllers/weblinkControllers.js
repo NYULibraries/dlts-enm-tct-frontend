@@ -1,6 +1,6 @@
 angular.module('editorial')
 .controller('AllWeblinksCtrl', ['$scope', 'Weblink', '$routeParams', function ($scope, Weblink, $routeParams) {
-    $scope.weblinks = Weblink.listByBasket($routeParams.basketID)
+    $scope.weblinks = Weblink.listByBasket($routeParams.basketID);
 }]);
 
 

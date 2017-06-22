@@ -11,7 +11,7 @@
               <button ng-hide="rtype.rtype === 'Generic'" ng-click="removeRtype()" class="btn btn-xs btn-danger">
                 <i class="fa fa-times"></i>
               </button>
-              {{ rtype.rtype }}
+              <a href="/relations/{{ rtype.rtype.replace('/', '+') }}">{{ rtype.rtype }}</a>
               <span class="text-muted">(used {{ rtype.count }} times)</span>
               <a href="" ng-click="triggerEditRtype()" ng-hide="rtype.rtype === 'Generic'"><i class="fa fa-pencil"></i></a>
             </div>

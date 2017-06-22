@@ -27,7 +27,8 @@ angular.module('editorial')
 
   $scope.order_options = [ 
     { type: 'alphabetical', descending: false, prop: 'display_name' },
-    { type: '# of occurrences', descending: true, prop: 'occurrence_counts' }
+    { type: '# of occurrences', descending: true, prop: 'occurrence_counts' },
+    { type: '# of relations', descending: true, prop: 'relation_counts' }
   ];
   $scope.ordering = $scope.order_options[0];
 

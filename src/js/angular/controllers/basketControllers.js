@@ -92,3 +92,32 @@ angular.module('editorial')
 
   };
 }]);
+
+angular.module('editorial')
+.controller('BasketDescriptionCtrl', ['$scope', 'Basket', function ($scope, Basket) {
+  $scope.descriptionForm = { show: false };
+
+  $scope.triggerDescriptionForm = function () {
+    $scope.tempDescription = $scope.basket.basket.description;
+    $scope.descriptionForm.show = true;
+  };
+
+  $scope.updateDescription = function () {
+    var basket = {
+      id: $scope.basket.basket.id,
+      display_name: $scope.basket.basket.display_name,
+      description: $scope.tempDescription
+    };
+
+    var success = function (response) {
+      $scope.basket.basket.description = response.description;
+      $scope.descriptionForm.show = false;
+    };
+
+    var failure = function (response) {
+      console.log(response.data);
+    };
+
+    Basket.update($scope.basket.basket.id, basket, success, failure);
+  };
+}]);

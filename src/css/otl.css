@@ -691,6 +691,7 @@ ui-virtual-list {
 }
 
 .canvas > .hit-item,
+.canvas > .relation-item,
 .canvas > .basket-item {
   position: absolute;
   margin: 0;
@@ -712,4 +713,15 @@ ui-virtual-list {
 
 .weblinks { 
   list-style: none;
+}
+
+/* dl-horizontal re-margin */
+
+@media (min-width: 768px) {
+  .dl-horizontal dt {
+    width: 60px;
+  } 
+  .dl-horizontal dd {
+    margin-left: 80px;
+  }
 }

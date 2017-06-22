@@ -1,6 +1,6 @@
 angular.module('editorial')
-  .controller('AddHitCtrl', ['$scope', 'Basket', 'Hit', 'Scope', 'Settings',
-      function($scope, Basket, Hit, Scope, Settings){
+  .controller('AddHitCtrl', ['$scope', 'Basket', 'Hit', 'Scope', 'Settings', 'Merge',
+      function($scope, Basket, Hit, Scope, Settings, Merge){
 
     $scope.hitListUrl =  Settings.baseUrl + 'api/hit/hits/search/?name=';
     $scope.clarification = {};
@@ -57,7 +57,7 @@ angular.module('editorial')
           $scope.showAddHitForm.show = false;
         };
 
-        Basket.merge($scope.clarification.value, $scope.basket.basket.id, mergeSuccess);
+        Merge.merge($scope.clarification.value, $scope.basket.basket.id, mergeSuccess);
 
       };
 

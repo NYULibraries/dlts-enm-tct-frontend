@@ -120,12 +120,41 @@ angular.module('editorial')
 
 
 angular.module('editorial')
+.controller('AddOrCreateOccurrenceCtrl', ['$scope', 'Occurrence', 'Hit', 
+    function ($scope, Occurrence, Hit) {
+  $scope.addOccurrenceForm = { show: false };
+  $scope.formData = {};
+  $scope.hits = Hit.all();
+  $scope.addOrSelectValue = 'name';
+
+  $scope.triggerAddOccurrenceForm = function () {
+    $scope.formData = {};
+    $scope.addOccurrenceForm.show = true;
+  };
+
+  $scope.addOccurrence = function () {
+    var success = function (response) {
+      $scope.addOccurrenceForm.show = false;
+      $scope.location.occurrences.push(response);
+    };
+
+    var failure = function (response) {
+      console.log(response.data);
+    };
+
+    Occurrence.createFromUISelect($scope.location.id, $scope.formData.hit, success, failure);
+  };
+}]);
+
+
+angular.module('editorial')
 .controller('AddOccurrenceToBasketCtrl', ['$scope', 'Occurrence', 'Document',
     function ($scope, Occurrence, Document) {
   $scope.showOccurrenceForm = { show: false };
 
   $scope.triggerOccurrenceForm = function () {
     $scope.sources = Document.getAll();
+    $scope.source = "";
     $scope.showOccurrenceForm.show = true;
     $scope.newOccurrence = {
       location: ""
@@ -133,7 +162,16 @@ angular.module('editorial')
   };
 
   $scope.getLocations = function () {
-    $scope.selectedDocument = Document.detail($scope.source);
+    var documentSuccess = function (response) {
+      $scope.selectedDocument = response;
+      $scope.newOccurrence.location = response.locations[0].id;
+    };
+
+    var documentFailure = function (response) {
+      console.log(response.data)
+    };
+
+    Document.detail($scope.source, documentSuccess, documentFailure);
   };
 
   $scope.locationDisplay = function (l) {
