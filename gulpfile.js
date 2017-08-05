@@ -14,7 +14,7 @@ var paths = {
   index: 'src/index.html',
   distDev:'./dist.dev',
   distProd: './dist.prod',
-  templates: 'src/**/*.html',
+  templates: ['src/**/*.html'],
   scriptsDevServer: 'devServer/**/*.js',
   fonts: 'bower_components/font-awesome/fonts/*.*',
   images: ['src/**/*.png', 'src/**/*.ico']
