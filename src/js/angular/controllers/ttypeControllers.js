@@ -1,9 +1,9 @@
 angular.module('editorial')
 .controller('BasketTypesCtrl', ['$scope', 'Ttype', 'Basket', 'Utils', '$routeParams', function ($scope, Ttype, Basket, Utils, $routeParams) {
   $scope.showTypesForm = { show: false};
-  $scope.allTypes = Ttype.all();
   $scope.addOrSelectValue = 'ttype';
   $scope.formData = {};
+  $scope.allTypes = Ttype.all();
 
   $scope.triggerAddType = function () {
     $scope.formData = {};
@@ -13,10 +13,10 @@ angular.module('editorial')
 
   $scope.addType = function () {
     var success = function (response) {
-      if ($scope.ttypes) {
-        $scope.ttypes.push(response);
+      if ($scope.basket.basket.types) {
+        $scope.basket.basket.types.push(response);
       } else {
-        $scope.ttypes = [response];
+        $scope.basket.basket.types = [response];
       }
       $scope.showTypesForm.show = false;
     };
@@ -36,7 +36,7 @@ angular.module('editorial')
       body: "Are you sure you want to remove the topic type \"" + $scope.type.ttype + '"?',
       actionName: "Remove",
       item: $scope.type,
-      list: $scope.ttypes,
+      list: $scope.basket.basket.types,
       deletionFunction: function (item_id, success, failure) {
         Ttype.discard(item_id, $scope.basket.basket.id, success, failure);
       }
@@ -61,7 +61,7 @@ angular.module('editorial')
       body: body,
       actionName: "Delete",
       item: $scope.ttype,
-      list: $scope.ttypes,
+      list: $scope.basket.basket.types,
       deletionFunction: Ttype.destroy
     });
   };
@@ -94,11 +94,6 @@ angular.module('editorial')
 }]);
 
 angular.module('editorial')
-.controller('AllTypesCtrl', ['$scope', 'Ttype', function ($scope, Ttype) {
-  $scope.ttypes = Ttype.allWithCounts();
-}]);
-
-angular.module('editorial')
 .controller('NewTtypeCtrl', ['$scope', 'Ttype', function ($scope, Ttype) {
   $scope.showNewTypeForm = { show: false };
 
@@ -106,7 +101,7 @@ angular.module('editorial')
     $scope.showNewTypeForm.show = false;
     response.count = 0;
 
-    $scope.ttypes.push(response);
+    $scope.basket.basket.types.push(response);
   }
 
   function newTypeFailure (response) {
@@ -128,4 +123,9 @@ angular.module('editorial')
       Ttype.create($scope.newType, newTypeSuccess, newTypeFailure);
     }
   };
+}]);
+
+angular.module('editorial')
+.controller('AllTypesCtrl', ['$scope', 'Ttype', function ($scope, Ttype) {
+  $scope.ttypes = Ttype.allWithCounts();
 }]);

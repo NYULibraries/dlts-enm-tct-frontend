@@ -1,7 +1,8 @@
 <div class="canvas" ng-style="canvasHeight">
     <div ng-repeat="basket in visibleProvider" ng-style="basket.styles" class="basket-item">
       <a href="/basket/{{ basket.id }}" ng-click="setCurrentHit(basket.id)">{{ basket.display_name }}</a>
-      <span ng-if="basket.occurrence_counts" class="text-muted">({{ basket.occurrence_counts }})</span>
+      <span ng-if="basket.occurrence_counts" class="text-muted">(Occurrences: {{ basket.occurrence_counts }})</span>
+      <span ng-if="basket.relation_counts" class="text-muted">(Relations: {{ basket.relation_counts }})</span>
 
       <!-- Review Controls -->
       <span ng-controller="ChangeReviewCtrl">
@@ -10,7 +11,7 @@
         <span class="text-light" ng-if="basket.review.reviewed">
           (Reviewed by {{ basket.review.reviewer }} on {{ basket.review.time.split('T')[0] }})
         </span>
-        <button class="btn btn-outline danger no-border" ng-if="basket.review.reviewed" ng-click="markNotReviewed(basket.reivew, basket.id)"><i class="fa fa-times"></i></button>
+        <button class="btn btn-outline danger no-border" ng-if="basket.review.reviewed" ng-click="markNotReviewed(basket.review, basket.id)"><i class="fa fa-times"></i></button>
       </span>
     </div>
 </div>

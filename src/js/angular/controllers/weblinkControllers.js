@@ -1,10 +1,4 @@
 angular.module('editorial')
-.controller('AllWeblinksCtrl', ['$scope', 'Weblink', '$routeParams', function ($scope, Weblink, $routeParams) {
-    $scope.weblinks = Weblink.listByBasket($routeParams.basketID)
-}]);
-
-
-angular.module('editorial')
 .controller('NewWebLinkCtrl', ['$scope', 'Weblink', 'Utils', '$routeParams', function ($scope, Weblink, Utils, $routeParams) {
 
   $scope.showLinkForm = {show: false};
@@ -20,7 +14,7 @@ angular.module('editorial')
 
   $scope.addLink = function () {
     var addLinkSuccess = function (response) {
-      $scope.weblinks.push(response);
+      $scope.basket.basket.weblinks.push(response);
 
       $scope.showLinkForm = false;
     };
@@ -59,7 +53,7 @@ angular.module('editorial')
       body: "Are you sure you want to remove the weblink \"" + $scope.weblink.content + "\" (" + $scope.weblink.url + ")",
       actionName: "Remove",
       item: $scope.weblink,
-      list: $scope.weblinks,
+      list: $scope.basket.basket.weblinks,
       deletionFunction: function (item_id, success, failure) {
         Weblink.discard(item_id, $scope.basket.basket.id, success, failure);
       }

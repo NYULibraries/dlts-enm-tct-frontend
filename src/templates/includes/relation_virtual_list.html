@@ -1,0 +1,8 @@
+<form class="canvas" ng-style="canvasHeight">
+  <div class="relation-item" ng-style="relation.styles" ng-repeat="relation in visibleProvider">
+    <a href="/basket/{{ relation.destination.id }}">{{ relation.destination.display_name }}</a>
+    <strong ng-if="relation.relationtype.rtype === 'Generic'">is related to</strong>
+    <strong ng-if="relation.relationtype.rtype !== 'Generic'">{{ relation.relationtype.role_to }}</strong> 
+    <a href="/basket/{{ relation.source.id }}">{{ relation.source.display_name }}</a> 
+  </div> 
+</form>

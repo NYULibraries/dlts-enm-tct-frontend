@@ -27,7 +27,7 @@ angular.module('editorial')
       scope.canvasHeight = {};
       scope.getTemplateUrl = function () {
         return attrs.templateUrl;
-      }
+      };
 
       function resize () {
         calculatedHeight = window.innerHeight - (+attrs.offset);
@@ -94,6 +94,7 @@ angular.module('editorial')
           firstCell--;
         }
 
+
         var cellsToCreate = Math.min(firstCell + scope.numberOfCells, scope.numberOfCells);
         scope.visibleProvider = fullData.slice(firstCell, firstCell + cellsToCreate);
       };
@@ -106,8 +107,8 @@ angular.module('editorial')
       };
 
       scope.$watchCollection('uiDataProvider', function () {
-          fullData = scope.uiDataProvider;
-          $timeout(scope.init);
+        fullData = scope.uiDataProvider;
+        $timeout(scope.init);
       });
 
       // Browser resize event

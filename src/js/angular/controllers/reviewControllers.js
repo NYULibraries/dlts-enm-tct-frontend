@@ -21,10 +21,3 @@ angular.module('editorial')
   $scope.markChanged = generateReviewFunction(true, true);
   $scope.markNotReviewed = generateReviewFunction(false, false);
 }]);
-
-
-angular.module('editorial')
-.controller('DetailReviewCtrl', ['$scope', 'Review', '$routeParams', function ($scope, Review, $routeParams) {
-  $scope.review = { reviewed: false, changed: false };
-  $scope.review = Review.get($routeParams.basketID);
-}]);

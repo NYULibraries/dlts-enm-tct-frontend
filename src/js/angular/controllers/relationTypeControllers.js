@@ -1,6 +1,10 @@
 angular.module('editorial')
-.controller('AllRelationTypesCtrl', ['$scope', 'Relation', function ($scope, Relation) {
+.controller('AllRelationTypesCtrl', ['$scope', 'Relation', '$location', function ($scope, Relation, $location) {
   $scope.relationtypes = Relation.typesWithCounts();
+
+  $scope.escape = function (rtype) {
+    return '/relations/' + window.encodeURIComponent(rtype.replace('/', '+'));
+  };
 }]);
 
 

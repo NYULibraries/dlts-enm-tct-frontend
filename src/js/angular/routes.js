@@ -189,6 +189,16 @@ angular.module('editorial')
         }],
       }
     })
+    .when('/relations/:relationType', {
+      templateUrl: 'templates/relations.html',
+      controller: 'RelationListCtrl',
+      resolve: {
+        authenticated: ['djangoAuth', function(djangoAuth){
+          // MAKE TRUE FOR PRODUCTION
+          return djangoAuth.authenticationStatus(true);
+        }],
+      }
+    })
     .when('/relationtypes/all', {
       templateUrl: 'templates/relationtypes.html',
       controller: 'AllRelationTypesCtrl',

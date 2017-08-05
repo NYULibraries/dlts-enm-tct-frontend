@@ -31,7 +31,7 @@
     "angucomplete-alt": "^3.0.0"
   },
   "resolutions": {
-    "angular": "1.6.3",
+    "angular": ">=1.6.0",
     "angucomplete-alt": "^3.0.0"
   }
 }

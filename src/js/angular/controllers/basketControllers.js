@@ -8,7 +8,6 @@ angular.module('editorial')
 
     $scope.processing = { active: false };
     Basket.detail($routeParams.basketID, basketSuccess);
-    $scope.ttypes = Ttype.listByBasket($routeParams.basketID); 
 
     $scope.displayName = Hit.displayName;
 
@@ -90,5 +89,34 @@ angular.module('editorial')
       $scope.error = "Please enter a name for the new topic";
     }
 
+  };
+}]);
+
+angular.module('editorial')
+.controller('BasketDescriptionCtrl', ['$scope', 'Basket', function ($scope, Basket) {
+  $scope.descriptionForm = { show: false };
+
+  $scope.triggerDescriptionForm = function () {
+    $scope.tempDescription = $scope.basket.basket.description;
+    $scope.descriptionForm.show = true;
+  };
+
+  $scope.updateDescription = function () {
+    var basket = {
+      id: $scope.basket.basket.id,
+      display_name: $scope.basket.basket.display_name,
+      description: $scope.tempDescription
+    };
+
+    var success = function (response) {
+      $scope.basket.basket.description = response.description;
+      $scope.descriptionForm.show = false;
+    };
+
+    var failure = function (response) {
+      console.log(response.data);
+    };
+
+    Basket.update($scope.basket.basket.id, basket, success, failure);
   };
 }]);

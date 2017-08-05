@@ -20,7 +20,7 @@ angular.module('editorial')
           response[i].type_name = response[i].direction === 'source' ? response[i].relationtype.role_to : response[i].relationtype.role_from;
         }
         $scope.forbiddenRelations = response;
-      }
+      };
 
       var forbiddenFetchFailure = function (response) {
         $scope.forbiddenLoading = false;
@@ -61,7 +61,7 @@ angular.module('editorial')
   $scope.bulkToggle = function () {
     for (var i = 0; i < $scope.basket.relations.length; i++) {
       $scope.bulkRelations[$scope.basket.relations[i].id] = $scope.selectAll ? true : false;
-    };
+    }
 
     $scope.selectAll = !$scope.selectAll;
   };
@@ -231,12 +231,12 @@ angular.module('editorial')
 
     var unforbidSuccess = function (response) {
       $scope.basket.relations.push($scope.relation);
-      Utils.removeFromList($scope.relation, $scope.forbiddenRelations)
+      Utils.removeFromList($scope.relation, $scope.forbiddenRelations);
     };
 
     var unforbidFailure = function (response) {
       console.log(response.data);
-    }
+    };
 
     Relation.edit($scope.relation, unforbidSuccess, unforbidFailure);
   };

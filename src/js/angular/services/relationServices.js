@@ -7,7 +7,8 @@ angular.module('editorial')
     defaultRelation: {method: 'POST',params: {relatedBasketID: 'new-default'}},
     full: {method: 'POST', params: {relatedBasketID: 'new'}},
     edit: {method: 'PUT'},
-    bulkDelete: {method: 'PATCH', params: {relatedBasketID: 'bulk-delete'}}
+    bulkDelete: {method: 'PATCH', params: {relatedBasketID: 'bulk-delete'}},
+    list: { method: 'GET', params: { relatedBasketID: 'list' }, isArray: true }
   });
 
   var _rtypes = $resource(Settings.baseUrl + 'api/relation/rtype/:rtypeID/', {}, {
@@ -24,6 +25,10 @@ angular.module('editorial')
 
   services.allTypes = function () {
     return _rtypes.all();
+  };
+
+  services.list = function (rtype, success, failure) {
+    return _relatedBasket.list({ rtype: rtype }, success, failure);
   };
 
   services.newType = function (newType, success, failure) {

@@ -6,6 +6,7 @@ angular.module('editorial')
         create: { method: 'POST', params: {occurrenceID: 'new'}},
         createWithHit: { method: 'POST', params: {occurrenceID: 'newWithHit'}},
         createOnBasket: { method: 'POST', params: { occurrenceID: 'newOnBasket' }},
+        uiSelectCreate: { method: 'POST', params: { occurrenceID: 'newFromUISelect' }},
         move: {method: 'PATCH'}
       });
 
@@ -16,6 +17,19 @@ angular.module('editorial')
   services.create = function (locationID, basketID, success, failure) {
     return _occurrence.create({}, {location_id: locationID, basket_id: basketID}, success, failure);
   };
+
+  services.createFromUISelect = function (locationID, hit_data, success, failure) {
+    var data = {
+      location_id: locationID,
+      hit: {
+        name: hit_data['name'],
+        id: hit_data['id']
+      }
+    };
+
+    return _occurrence.uiSelectCreate({}, data, success, failure);
+  };
+
 
   services.createWithHit = function (locationID, hit_name, success, failure) {
     // trim whitespace from beginning and end of name

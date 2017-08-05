@@ -7,7 +7,7 @@ var gulp = require('gulp'),
     Q = require('q'),
     streamqueue = require('streamqueue'),
     path = require('path');
-j
+
 var paths = {
   scripts: 'src/**/*.js',
   styles: 'src/**/*.css',
@@ -17,7 +17,7 @@ var paths = {
   templates: 'src/**/*.html',
   scriptsDevServer: 'devServer/**/*.js',
   fonts: 'bower_components/font-awesome/fonts/*.*',
-  images: get_config_replacements('img','src/**/*.png'),
+  images: ['src/**/*.png', 'src/**/*.ico']
 };
 
 var pipes = {};
@@ -128,7 +128,7 @@ pipes.scriptedPartials = function() {
 };
 
 pipes.builtVendorStylesDev = function() {
-  var filter = config['removeBootstrap'] ? /awesome\.less|\.css/ : /\.less|\.css/;
+  var filter = /\.less|\.css/;
   
   return gulp.src(bowerFiles({filter: filter}))
     .pipe(plugins.less())
@@ -136,12 +136,12 @@ pipes.builtVendorStylesDev = function() {
 };
 
 pipes.builtVendorStylesProd = function() {
-  var filter = config['removeBootstrap'] ? /awesome\.less|\.css/ : /\.less|\.css/;
+  var filter = /\.less|\.css/;
 
   return gulp.src(bowerFiles({filter: filter}))
     .pipe(plugins.sourcemaps.init())
       .pipe(plugins.less())
-      .pipe(plugins.minifyCss())
+      .pipe(plugins.cleanCss())
       .pipe(pipes.minifiedFileName())
     .pipe(plugins.sourcemaps.write('maps'))
     .pipe(gulp.dest(paths.distProd + '/css'));
@@ -155,7 +155,7 @@ pipes.builtStylesDev = function() {
 pipes.builtStylesProd = function() {
     return gulp.src(paths.styles)
         .pipe(plugins.sourcemaps.init())
-            .pipe(plugins.minifyCss())
+            .pipe(plugins.cleanCss())
             .pipe(pipes.minifiedFileName())
         .pipe(plugins.sourcemaps.write('/maps'))
         .pipe(gulp.dest(paths.distProd));
@@ -303,7 +303,7 @@ gulp.task('watch-dev', ['clean-build-app-dev'], function() {
           ext: 'js', 
           watch: ['devServer/'], 
           env: {NODE_ENV : 'development',
-                NODE_DIR: argv.config ? 'builds/output/' + argv.config + '/' : ''} 
+                NODE_DIR: ''} 
         })
         .on('change', ['jshint-devserver'])
         .on('restart', function () {
@@ -349,7 +349,7 @@ gulp.task('watch-prod', ['clean-build-app-prod', 'validate-devserver-scripts'], 
           ext: 'js', 
           watch: ['devServer/'], 
           env: {NODE_ENV : 'production',
-                NODE_DIR: argv.config ? 'builds/output/' + argv.config + '/' : ''} 
+                NODE_DIR: ''} 
         })
         .on('change', ['validate-devserver-scripts'])
         .on('restart', function () {
