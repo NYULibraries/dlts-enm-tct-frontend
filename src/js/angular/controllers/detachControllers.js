@@ -17,8 +17,8 @@ angular.module('editorial')
   }
 
   // set initial form values: types
-  for (i=0; i < $scope.ttypes.length; i++) {
-    $scope.split_data.types[$scope.ttypes[i].id] = "stay";
+  for (i=0; i < $scope.basket.basket.types.length; i++) {
+    $scope.split_data.types[$scope.basket.basket.types[i].id] = "stay";
   }
 
   var detachFailure = function (response) {

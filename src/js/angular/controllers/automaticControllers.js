@@ -4,7 +4,7 @@ angular.module('editorial')
   $scope.running = false;
 
   $scope.runAutomaticRelations = function () {
-    $scope.running = true
+    $scope.running = true;
 
     var automaticSuccess = function (response) {
       $scope.running = false; 
@@ -17,5 +17,5 @@ angular.module('editorial')
     };
 
     Automatic.runRules($scope.basket.basket.id, automaticSuccess, automaticFailure);
-  }
-}]);;
+  };
+}]);

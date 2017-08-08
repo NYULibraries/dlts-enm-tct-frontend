@@ -168,7 +168,7 @@ angular.module('editorial')
     };
 
     var documentFailure = function (response) {
-      console.log(response.data)
+      console.log(response.data);
     };
 
     Document.detail($scope.source, documentSuccess, documentFailure);

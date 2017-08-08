@@ -9,10 +9,10 @@ angular.module('editorial')
     if (filter !== $scope.filtering) {
       switch (filter) {
         case "Unreviewed":
-          $scope.baskets = unfilteredTopics.filter(function (basket) { return basket.review.reviewed === false });
+          $scope.baskets = unfilteredTopics.filter(function (basket) { return basket.review.reviewed === false; });
           break;
         case "Reviewed":
-          $scope.baskets = unfilteredTopics.filter(function (basket) { return basket.review.reviewed === true });
+          $scope.baskets = unfilteredTopics.filter(function (basket) { return basket.review.reviewed === true; });
           break;
         case "Any Topic":
         default:
@@ -23,7 +23,7 @@ angular.module('editorial')
       Hit.storeList($scope.baskets);
       $scope.filtering = filter;
     }
-  }
+  };
 
   $scope.order_options = [ 
     { type: 'alphabetical', descending: false, prop: 'display_name' },
@@ -85,4 +85,4 @@ angular.module('editorial')
   $scope.basketCall = function (success, failure) {
     Review.basketByDocument($routeParams.docID, success, failure);
   };
-}])
+}]);

@@ -9,12 +9,12 @@ angular.module('editorial')
 
       var success = function (response) {
         angular.forEach(response, function (value, key) {
-          elem[key] = response[key]
+          elem[key] = response[key];
         });
       };
 
       Review.set(basketID, mark_reviewed, mark_changed, success, failure);
-    }
+    };
   };
 
   $scope.markReviewed = generateReviewFunction(true, false);

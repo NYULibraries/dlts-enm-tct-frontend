@@ -8,7 +8,7 @@ angular.module('editorial')
     $scope.reconciliationErrors = response.data;
     $scope.processing = false;
     $scope.successMessage = "Processing Complete";
-  }
+  };
 
   var failure = function (response) {
     $scope.api_errors = response.data ? response.data.non_field_errors : ["Unable to run reconciliation right now. Please try again later"];

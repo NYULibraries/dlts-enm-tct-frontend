@@ -7,7 +7,3 @@ bower_components/
 ##################
 dist.dev/
 dist.prod/
-
-# metadata #
-############
-.nvmrc

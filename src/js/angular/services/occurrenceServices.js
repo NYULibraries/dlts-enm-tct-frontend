@@ -22,8 +22,8 @@ angular.module('editorial')
     var data = {
       location_id: locationID,
       hit: {
-        name: hit_data['name'],
-        id: hit_data['id']
+        name: hit_data.name,
+        id: hit_data.id
       }
     };
 
